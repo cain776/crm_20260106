@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eXpert slim X - 대량등록(excel)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="font-pretendard bg-gray-50">
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <!-- 로고 영역 (사이드바 너비와 동일) -->
+        <div class="top-bar-brand"></div>
+        
+        <!-- 메인 영역 (컨텐츠와 정렬) -->
+        <div class="top-bar-main">
+            <div class="top-bar-left">
+                <button class="top-bar-toggle" onclick="toggleSidebar()" title="사이드바 토글">
+                    <i data-lucide="panel-left-close" class="w-5 h-5" id="sidebar-toggle-icon"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <span class="top-bar-title">대량등록(엑셀)</span>
+            </div>
+            
+            <div class="top-bar-center">
+                <div class="top-bar-search">
+                    <i data-lucide="search" class="search-icon w-4 h-4"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="top-bar-right">
+                <button class="top-bar-icon" title="알림">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="badge-dot"></span>
+                </button>
+                <button class="top-bar-icon" title="설정">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                </button>
+                <button class="top-bar-icon" title="도움말">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <button class="top-bar-icon" onclick="toggleFullscreen()" title="전체화면" id="fullscreenBtn">
+                    <i data-lucide="maximize" class="w-5 h-5" id="fullscreenIcon"></i>
+                </button>
+                <div class="language-select">
+                    <button class="top-bar-icon" onclick="toggleLanguageMenu()" title="언어선택" id="langBtn">
+                        <span class="lang-code">KO</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option active" onclick="selectLanguage('ko', 'KO')">
+                            <span>🇰🇷</span> 한국어
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('en', 'EN')">
+                            <span>🇺🇸</span> English
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('ja', 'JP')">
+                            <span>🇯🇵</span> 日本語
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('zh', 'CN')">
+                            <span>🇨🇳</span> 中文
+                        </button>
+                    </div>
+                </div>
+                <div class="top-bar-divider"></div>
+                <div class="user-menu">
+                    <button class="user-info" onclick="toggleUserMenu()" id="userBtn">
+                        <div class="top-bar-avatar">A</div>
+                        <span class="user-name">Admin</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <div class="top-bar-avatar">A</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">Admin</span>
+                                <span class="user-dropdown-email">admin@expert.com</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item" onclick="goToMyPage()">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            내 정보
+                        </button>
+                        <button class="user-dropdown-item" onclick="goToSettings()">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            설정
+                        </button>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item text-red-500" onclick="logout()">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <a href="../index.html" class="sidebar-logo">
+                <span class="logo-full">eXpert slim X</span>
+                <span class="logo-short">SL</span>
+            </a>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1 px-3">
+                    <!-- HOME -->
+                    <li>
+                        <a href="../index.html" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="HOME">
+                            <i data-lucide="home" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">HOME</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 주문접수 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-register')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문접수">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="plus-circle" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문접수</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow rotate-180" id="order-register-arrow"></i>
+                        </button>
+                        <ul id="order-register" class="submenu open pl-11 space-y-1 mt-1">
+                            <li><a href="bulk-registration.html" class="block py-2 px-3 text-sm text-blue-600 font-medium rounded bg-blue-50">대량등록(excel)</a></li>
+                            <li><a href="auto-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동등록(API)</a></li>
+                            <li><a href="auto-collection-settings.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록 설정</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 주문관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-manage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="clipboard-list" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-manage-arrow"></i>
+                        </button>
+                        <ul id="order-manage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="order-management.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관 관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 발송내역 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="발송내역">
+                            <i data-lucide="truck" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">발송내역</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 상품관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="상품관리">
+                            <i data-lucide="package" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">상품관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 창고관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="창고관리">
+                            <i data-lucide="warehouse" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">창고관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 재배송/회수 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="재배송/회수">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">재배송/회수</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 공지/문의 관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('notice')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="공지/문의 관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="message-square" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">공지/문의 관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="notice-arrow"></i>
+                        </button>
+                        <ul id="notice" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="notice.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 정산관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('settlement')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="정산관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="calculator" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">정산관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="settlement-arrow"></i>
+                        </button>
+                        <ul id="settlement" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- My Page -->
+                    <li>
+                        <button onclick="toggleSubmenu('mypage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="My Page">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="user" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">My Page</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="mypage-arrow"></i>
+                        </button>
+                        <ul id="mypage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a></li>
+                            <li><a href="api-integration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Footer -->
+            <div class="sidebar-footer p-4 border-t border-gray-100 text-xs text-gray-400">
+                <span>© SWKIM eXpert slim X</span>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content flex-1">
+            <!-- Page Content -->
+            <div class="p-6">
+                <!-- Filter Bar (공통 컴포넌트 사용) -->
+                <div class="filter-bar mb-6">
+                    <div class="filter-bar-left">
+                        <!-- 양식선택 Select -->
+                        <div class="floating-select" style="min-width: 220px">
+                            <select id="formatSelect" onchange="handleFloatingSelectChange(this)">
+                                <option value=""></option>
+                                <option value="japan-qoo10">일본(Japan) > Qoo10</option>
+                                <option value="japan-amazon">일본(Japan) > Amazon</option>
+                                <option value="usa-amazon">미국(USA) > Amazon</option>
+                                <option value="usa-ebay">미국(USA) > eBay</option>
+                                <option value="korea-coupang">한국(Korea) > Coupang</option>
+                            </select>
+                            <label for="formatSelect">양식선택</label>
+                            <span class="floating-select-clear" onclick="clearSelect('formatSelect')">
+                                <i data-lucide="x" class="w-3 h-3 text-gray-500"></i>
+                            </span>
+                            <i data-lucide="chevron-down" class="floating-select-arrow w-4 h-4"></i>
+                        </div>
+                        
+                        <!-- API ID Select -->
+                        <div class="floating-select" style="min-width: 176px">
+                            <select id="apiIdSelect" onchange="handleFloatingSelectChange(this)">
+                                <option value=""></option>
+                                <option value="api-001">API-001</option>
+                                <option value="api-002">API-002</option>
+                                <option value="api-003">API-003</option>
+                            </select>
+                            <label for="apiIdSelect">API ID</label>
+                            <span class="floating-select-clear" onclick="clearSelect('apiIdSelect')">
+                                <i data-lucide="x" class="w-3 h-3 text-gray-500"></i>
+                            </span>
+                            <i data-lucide="chevron-down" class="floating-select-arrow w-4 h-4"></i>
+                        </div>
+                        
+                        <!-- 샘플파일 다운로드 (공통 버튼) -->
+                        <button onclick="downloadSample()" class="btn btn-success">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            샘플파일 다운로드
+                        </button>
+                        
+                        <!-- 파일 선택 (공통 컴포넌트) -->
+                        <div class="file-input-group">
+                            <div class="file-input-wrapper">
+                                <button class="btn btn-secondary">
+                                    <i data-lucide="folder-open" class="w-4 h-4"></i>
+                                    파일선택
+                                </button>
+                                <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFileInputChange(this); handleFileSelect(this);">
+                            </div>
+                            <span id="fileInputFileName" class="file-input-name">선택된 파일 없음</span>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-bar-right">
+                        <!-- 초기화 버튼 (공통 버튼) -->
+                        <button onclick="resetForm()" class="btn btn-secondary">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            초기화
+                        </button>
+                        
+                        <!-- 엑셀 등록 버튼 (공통 버튼) -->
+                        <button onclick="uploadExcel()" class="btn btn-primary">
+                            <i data-lucide="upload" class="w-4 h-4"></i>
+                            엑셀 등록
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Data Table -->
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                    <!-- Table Header -->
+                    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <h2 class="text-lg font-semibold text-gray-900">업로드 데이터</h2>
+                            <span class="text-sm text-gray-500" id="dataCount">총 0건</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="btn-icon btn-icon-secondary" title="설정">
+                                <i data-lucide="settings-2" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Table Content -->
+                    <div class="overflow-x-auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-12">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300">
+                                    </th>
+                                    <th>No</th>
+                                    <th>주문번호</th>
+                                    <th>상품명</th>
+                                    <th>옵션</th>
+                                    <th>수량</th>
+                                    <th>수취인</th>
+                                    <th>연락처</th>
+                                    <th>배송지</th>
+                                    <th>상태</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <!-- Empty State -->
+                                <tr id="emptyState">
+                                    <td colspan="10" class="text-center py-16">
+                                        <div class="flex flex-col items-center gap-3">
+                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                                                <i data-lucide="file-spreadsheet" class="w-8 h-8 text-gray-400"></i>
+                                            </div>
+                                            <p class="text-gray-500">엑셀 파일을 선택하여 데이터를 업로드해주세요</p>
+                                            <p class="text-sm text-gray-400">지원 형식: .xlsx, .xls, .csv</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Table Footer -->
+                    <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                        <div class="text-sm text-gray-500">
+                            선택된 항목: <span id="selectedCount">0</span>건
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded transition" disabled>
+                                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                            </button>
+                            <span class="px-3 py-1.5 text-sm text-gray-900 bg-gray-100 rounded">1</span>
+                            <button class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded transition" disabled>
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/main.js"></script>
+    <script src="../js/components.js"></script>
+    <script>
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initFloatingSelects();
+            
+            // Open the order-register submenu by default
+            const orderRegisterSubmenu = document.getElementById('order-register');
+            if (orderRegisterSubmenu) {
+                orderRegisterSubmenu.classList.add('open');
+            }
+        });
+        
+        // Handle file selection (추가 로직)
+        function handleFileSelect(input) {
+            if (input.files[0]) {
+                showSampleData();
+            }
+        }
+        
+        // Download sample file
+        function downloadSample() {
+            showToast('샘플 파일을 다운로드합니다.', 'info');
+        }
+        
+        // Reset form
+        function resetForm() {
+            clearSelect('formatSelect');
+            clearSelect('apiIdSelect');
+            resetFileInput('fileInput');
+            
+            // Clear table
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) {
+                emptyState.style.display = '';
+            }
+            document.getElementById('dataCount').textContent = '총 0건';
+            
+            showToast('초기화되었습니다.', 'info');
+        }
+        
+        // Upload Excel
+        function uploadExcel() {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.files[0]) {
+                showToast('파일을 선택해주세요.', 'warning');
+                return;
+            }
+            
+            showToast('엑셀 파일을 등록 중입니다...', 'info');
+            
+            setTimeout(() => {
+                showToast('엑셀 등록이 완료되었습니다.', 'success');
+            }, 1500);
+        }
+        
+        // Show sample data in table
+        function showSampleData() {
+            const sampleData = [
+                { no: 1, orderNo: 'ORD-2024120501', product: 'K-Beauty 스킨케어 세트', option: '민감성용', qty: 2, receiver: '田中太郎', phone: '090-1234-5678', address: '東京都渋谷区...', status: '대기' },
+                { no: 2, orderNo: 'ORD-2024120502', product: '한국 라면 믹스 박스', option: '매운맛', qty: 5, receiver: '佐藤花子', phone: '080-9876-5432', address: '大阪府大阪市...', status: '대기' },
+                { no: 3, orderNo: 'ORD-2024120503', product: 'BT21 피규어 세트', option: 'CHIMMY', qty: 1, receiver: '鈴木一郎', phone: '070-5555-1234', address: '福岡県福岡市...', status: '대기' },
+            ];
+            
+            const tbody = document.getElementById('dataTableBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            emptyState.style.display = 'none';
+            
+            let html = '';
+            sampleData.forEach(item => {
+                html += `
+                    <tr>
+                        <td><input type="checkbox" class="w-4 h-4 rounded border-gray-300"></td>
+                        <td>${item.no}</td>
+                        <td class="font-medium text-blue-600">${item.orderNo}</td>
+                        <td>${item.product}</td>
+                        <td>${item.option}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.receiver}</td>
+                        <td>${item.phone}</td>
+                        <td class="max-w-[200px] truncate">${item.address}</td>
+                        <td><span class="badge badge-yellow">${item.status}</span></td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html + emptyState.outerHTML;
+            document.getElementById('dataCount').textContent = `총 ${sampleData.length}건`;
+        }
+    </script>
+</body>
+</html>

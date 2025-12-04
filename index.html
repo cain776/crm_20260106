@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eXpert slim X - HOME</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-pretendard bg-gray-50">
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <!-- 로고 영역 (사이드바 너비와 동일) -->
+        <div class="top-bar-brand"></div>
+        
+        <!-- 메인 영역 (컨텐츠와 정렬) -->
+        <div class="top-bar-main">
+            <div class="top-bar-left">
+                <button class="top-bar-toggle" onclick="toggleSidebar()" title="사이드바 토글">
+                    <i data-lucide="panel-left-close" class="w-5 h-5" id="sidebar-toggle-icon"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <span class="top-bar-title">HOME</span>
+            </div>
+            
+            <div class="top-bar-center">
+                <div class="top-bar-search">
+                    <i data-lucide="search" class="search-icon w-4 h-4"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="top-bar-right">
+                <button class="top-bar-icon" title="알림">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="badge-dot"></span>
+                </button>
+                <button class="top-bar-icon" title="설정">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                </button>
+                <button class="top-bar-icon" title="도움말">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <button class="top-bar-icon" onclick="toggleFullscreen()" title="전체화면" id="fullscreenBtn">
+                    <i data-lucide="maximize" class="w-5 h-5" id="fullscreenIcon"></i>
+                </button>
+                <div class="language-select">
+                    <button class="top-bar-icon" onclick="toggleLanguageMenu()" title="언어선택" id="langBtn">
+                        <span class="lang-code">KO</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option active" onclick="selectLanguage('ko', 'KO')">
+                            <span>🇰🇷</span> 한국어
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('en', 'EN')">
+                            <span>🇺🇸</span> English
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('ja', 'JP')">
+                            <span>🇯🇵</span> 日本語
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('zh', 'CN')">
+                            <span>🇨🇳</span> 中文
+                        </button>
+                    </div>
+                </div>
+                <div class="top-bar-divider"></div>
+                <div class="user-menu">
+                    <button class="user-info" onclick="toggleUserMenu()" id="userBtn">
+                        <div class="top-bar-avatar">A</div>
+                        <span class="user-name">Admin</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <div class="top-bar-avatar">A</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">Admin</span>
+                                <span class="user-dropdown-email">admin@expert.com</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item" onclick="goToMyPage()">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            내 정보
+                        </button>
+                        <button class="user-dropdown-item" onclick="goToSettings()">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            설정
+                        </button>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item text-red-500" onclick="logout()">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <a href="index.html" class="sidebar-logo">
+                <span class="logo-full">eXpert slim X</span>
+                <span class="logo-short">SL</span>
+            </a>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1 px-3">
+                    <!-- HOME -->
+                    <li>
+                        <a href="index.html" class="menu-item active relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" title="HOME">
+                            <i data-lucide="home" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">HOME</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 주문접수 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-register')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문접수">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="plus-circle" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문접수</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-register-arrow"></i>
+                        </button>
+                        <ul id="order-register" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="pages/bulk-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a></li>
+                            <li><a href="pages/auto-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동등록(API)</a></li>
+                            <li><a href="pages/auto-collection-settings.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록 설정</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 주문관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-manage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="clipboard-list" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-manage-arrow"></i>
+                        </button>
+                        <ul id="order-manage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="pages/order-management.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관 관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 발송내역 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="발송내역">
+                            <i data-lucide="truck" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">발송내역</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 상품관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="상품관리">
+                            <i data-lucide="package" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">상품관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 창고관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="창고관리">
+                            <i data-lucide="warehouse" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">창고관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 재배송/회수 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="재배송/회수">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">재배송/회수</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 공지/문의 관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('notice')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="공지/문의 관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="message-square" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">공지/문의 관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="notice-arrow"></i>
+                        </button>
+                        <ul id="notice" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="pages/notice.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 정산관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('settlement')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="정산관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="calculator" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">정산관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="settlement-arrow"></i>
+                        </button>
+                        <ul id="settlement" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- My Page -->
+                    <li>
+                        <button onclick="toggleSubmenu('mypage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="My Page">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="user" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">My Page</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="mypage-arrow"></i>
+                        </button>
+                        <ul id="mypage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a></li>
+                            <li><a href="pages/api-integration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Footer -->
+            <div class="sidebar-footer p-4 border-t border-gray-100 text-xs text-gray-400">
+                <span>© SWKIM eXpert slim X</span>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content flex-1">
+            <!-- Page Content -->
+            <div class="p-6">
+                <!-- Page Title -->
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">HOME</h1>
+                    <p class="text-gray-500 mt-1">eXpert slim X - 전체 주문 및 배송 현황을 한눈에 확인하세요</p>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+                    <!-- 신규 주문 -->
+                    <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-500 text-sm">신규 주문</span>
+                            <span class="badge badge-blue">오늘</span>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900">128</div>
+                        <div class="flex items-center gap-1 mt-2 text-sm">
+                            <i data-lucide="trending-up" class="w-4 h-4 text-green-500"></i>
+                            <span class="text-green-500">12%</span>
+                            <span class="text-gray-400">vs 어제</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 배송중 -->
+                    <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-500 text-sm">배송중</span>
+                            <span class="badge badge-yellow">진행</span>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900">342</div>
+                        <div class="text-sm text-gray-400 mt-2">11개국 배송중</div>
+                    </div>
+                    
+                    <!-- 배송 완료 -->
+                    <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-500 text-sm">배송 완료</span>
+                            <span class="badge badge-green">완료</span>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900">1,847</div>
+                        <div class="text-sm text-gray-400 mt-2">이번 달 기준</div>
+                    </div>
+                    
+                    <!-- 반품/교환 -->
+                    <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-gray-500 text-sm">반품/교환</span>
+                            <span class="badge badge-red">처리중</span>
+                        </div>
+                        <div class="text-3xl font-bold text-gray-900">23</div>
+                        <div class="text-sm text-gray-400 mt-2">5건 처리</div>
+                    </div>
+                    
+                    <!-- 이번 달 매출 -->
+                    <div class="stat-card bg-blue-600 rounded-xl p-5 text-white">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-white/80 text-sm">이번 달 매출</span>
+                            <button class="text-white/60 hover:text-white">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="text-3xl font-bold">$284,520</div>
+                        <div class="text-sm text-white/70 mt-1">₩ 380,456,720</div>
+                        <div class="mt-3">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-white/70">목표 대비</span>
+                                <span class="font-medium">87%</span>
+                            </div>
+                            <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div class="h-full bg-white rounded-full" style="width: 87%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                        <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                            <i data-lucide="clipboard-list" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">주문 관리</span>
+                    </button>
+                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                        <div class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center">
+                            <i data-lucide="truck" class="w-5 h-5 text-yellow-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">배송 현황</span>
+                    </button>
+                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                        <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+                            <i data-lucide="package" class="w-5 h-5 text-green-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">재고 관리</span>
+                    </button>
+                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                        <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center">
+                            <i data-lucide="users" class="w-5 h-5 text-purple-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">고객 관리</span>
+                    </button>
+                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                        <div class="w-10 h-10 bg-pink-50 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bar-chart-2" class="w-5 h-5 text-pink-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">매출 리포트</span>
+                    </button>
+                </div>
+                
+                <!-- Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- Weekly Orders Chart -->
+                    <div class="lg:col-span-2 bg-white rounded-xl p-6 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-semibold text-gray-900">주간 주문 현황</h3>
+                            <span class="text-sm text-gray-500">총 892건</span>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Country Distribution -->
+                    <div class="bg-white rounded-xl p-6 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-semibold text-gray-900">국가별 주문 비율</h3>
+                            <span class="text-sm text-gray-500">이번 달</span>
+                        </div>
+                        <div class="h-48 flex items-center justify-center">
+                            <canvas id="countryChart"></canvas>
+                        </div>
+                        <div class="mt-4 space-y-2">
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                    <span class="text-gray-600">미국</span>
+                                </div>
+                                <span class="font-medium">35%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <span class="text-gray-600">일본</span>
+                                </div>
+                                <span class="font-medium">25%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <span class="text-gray-600">독일</span>
+                                </div>
+                                <span class="font-medium">15%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <span class="text-gray-600">영국</span>
+                                </div>
+                                <span class="font-medium">12%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+                                    <span class="text-gray-600">호주</span>
+                                </div>
+                                <span class="font-medium">8%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-gray-400"></div>
+                                    <span class="text-gray-600">기타</span>
+                                </div>
+                                <span class="font-medium">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Recent Orders -->
+                    <div class="bg-white rounded-xl p-6 border border-gray-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-900">최근 주문</h3>
+                            <a href="#" class="text-sm text-blue-600 hover:underline flex items-center gap-1">
+                                전체보기
+                                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600">US</div>
+                                    <div>
+                                        <div class="font-medium text-sm text-gray-900">#ORD-2024120401</div>
+                                        <div class="text-xs text-gray-500">John Smith · $125.00</div>
+                                    </div>
+                                </div>
+                                <span class="badge badge-yellow">처리</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-xs font-bold text-red-600">JP</div>
+                                    <div>
+                                        <div class="font-medium text-sm text-gray-900">#ORD-2024120402</div>
+                                        <div class="text-xs text-gray-500">田中太郎 · ¥16,800</div>
+                                    </div>
+                                </div>
+                                <span class="badge badge-green">배송중</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-xs font-bold text-yellow-700">DE</div>
+                                    <div>
+                                        <div class="font-medium text-sm text-gray-900">#ORD-2024120403</div>
+                                        <div class="text-xs text-gray-500">Hans Mueller · €89.00</div>
+                                    </div>
+                                </div>
+                                <span class="badge badge-blue">배송중</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600">UK</div>
+                                    <div>
+                                        <div class="font-medium text-sm text-gray-900">#ORD-2024120404</div>
+                                        <div class="text-xs text-gray-500">James Wilson · £57.50</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-gray-100 text-gray-600">완료</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Marketplace Status -->
+                    <div class="bg-white rounded-xl p-6 border border-gray-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-900">마켓플레이스 현황</h3>
+                            <span class="text-sm text-gray-500">실시간</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                        <span class="text-orange-600 font-bold text-sm">A</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">Amazon</div>
+                                        <div class="text-xs text-gray-500">미국, 일본, 독일</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-semibold text-gray-900">1,234</div>
+                                    <div class="text-xs text-green-500">+15%</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <span class="text-green-600 font-bold text-sm">S</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">Shopify</div>
+                                        <div class="text-xs text-gray-500">자사몰</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-semibold text-gray-900">567</div>
+                                    <div class="text-xs text-green-500">+8%</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <span class="text-blue-600 font-bold text-sm">e</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">eBay</div>
+                                        <div class="text-xs text-gray-500">글로벌</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-semibold text-gray-900">289</div>
+                                    <div class="text-xs text-red-500">-3%</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                        <span class="text-red-600 font-bold text-sm">C</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">Coupang</div>
+                                        <div class="text-xs text-gray-500">한국</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-semibold text-gray-900">412</div>
+                                    <div class="text-xs text-green-500">+22%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Custom Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

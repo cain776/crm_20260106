@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eXpert slim X - 공지사항</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        /* Filter Buttons */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            background: white;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+        }
+        
+        .filter-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+        
+        .filter-btn.important {
+            border-color: #f87171;
+            color: #dc2626;
+        }
+        
+        .filter-btn.important:hover {
+            background: #fef2f2;
+        }
+        
+        .filter-btn.important.active {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+        
+        /* Notice Table Styles */
+        .notice-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .notice-table th {
+            background-color: transparent;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        .notice-table th.center,
+        .notice-table td.center {
+            text-align: center;
+        }
+        
+        .notice-table td {
+            padding: 14px 16px;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .notice-table tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        .notice-table .no-col {
+            width: 60px;
+            text-align: center;
+        }
+        
+        .notice-table .title-col {
+            min-width: 300px;
+        }
+        
+        .notice-table .title-col a {
+            color: #374151;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .notice-table .title-col a:hover {
+            color: #2563eb;
+        }
+        
+        .notice-table .category-col {
+            width: 100px;
+            text-align: center;
+        }
+        
+        .notice-table .important-col {
+            width: 80px;
+            text-align: center;
+        }
+        
+        .notice-table .attachment-col {
+            width: 80px;
+            text-align: center;
+        }
+        
+        .notice-table .date-col {
+            width: 180px;
+            min-width: 180px;
+            text-align: center;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+        
+        /* Category Badge */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 4px;
+        }
+        
+        .category-badge.request {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        
+        .category-badge.customs {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .category-badge.logistics {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .category-badge.system {
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+        
+        .category-badge.news {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+        
+        /* Important Badge */
+        .important-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 8px;
+            background: #fef2f2;
+            color: #dc2626;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        
+        /* Attachment Icon */
+        .attachment-icon {
+            color: #9ca3af;
+        }
+        
+        .attachment-icon.has-file {
+            color: #6b7280;
+        }
+        
+        /* Pagination Styles */
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            padding: 16px 20px;
+            background: transparent;
+        }
+        
+        .pagination-info {
+            font-size: 13px;
+            color: #6b7280;
+        }
+        
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .pagination-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            background: white;
+            color: #374151;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn.active {
+            background-color: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+        
+        .page-size-select {
+            padding: 6px 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #374151;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .page-size-select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        /* Write Button */
+        .write-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .write-btn:hover {
+            background: #1d4ed8;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal-overlay.hidden {
+            display: none;
+        }
+        
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-lg {
+            width: 900px;
+            max-width: 95vw;
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .modal-header-primary {
+            background: #2563eb;
+        }
+        
+        .modal-header-primary .modal-title {
+            color: white;
+        }
+        
+        .modal-header-primary .modal-close {
+            color: white;
+        }
+        
+        .modal-header-primary .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .modal-close:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .form-label.required::before {
+            content: '*';
+            color: #ef4444;
+            margin-right: 4px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #374151;
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-select {
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #374151;
+            background: white;
+            cursor: pointer;
+            min-width: 160px;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #2563eb;
+        }
+        
+        /* File Upload Styles */
+        .file-upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9fafb;
+            transition: all 0.2s;
+        }
+        
+        .file-upload-area:hover,
+        .file-upload-area.dragover {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+        
+        .file-upload-content {
+            text-align: left;
+        }
+        
+        .file-upload-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+        
+        .file-upload-btn-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .file-upload-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .file-upload-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .file-upload-info {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+        
+        /* Editor Styles */
+        .editor-container {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .editor-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+        
+        .editor-select {
+            padding: 4px 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #374151;
+            background: white;
+        }
+        
+        .editor-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            border-radius: 4px;
+            color: #6b7280;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .editor-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .editor-divider {
+            width: 1px;
+            height: 20px;
+            background: #d1d5db;
+            margin: 0 4px;
+        }
+        
+        .editor-spacer {
+            flex: 1;
+        }
+        
+        .editor-mode {
+            padding: 4px 8px;
+            font-size: 11px;
+            color: #9ca3af;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        
+        .editor-mode:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .editor-content {
+            min-height: 300px;
+            padding: 16px;
+            font-size: 14px;
+            color: #374151;
+            outline: none;
+        }
+        
+        .editor-content:empty::before {
+            content: attr(placeholder);
+            color: #9ca3af;
+        }
+        
+        .editor-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            font-size: 11px;
+            color: #9ca3af;
+        }
+        
+        .editor-notice {
+            color: #6b7280;
+        }
+        
+        .editor-help {
+            color: #ef4444;
+        }
+        
+        /* View Notice Modal Styles */
+        .view-notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .view-notice-category {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        
+        .view-notice-date {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .view-notice-content {
+            min-height: 200px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #374151;
+        }
+        
+        .view-notice-content:empty::before {
+            content: '내용이 없습니다.';
+            color: #9ca3af;
+        }
+        
+        .view-notice-attachment {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: #fef3c7;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #92400e;
+        }
+        
+        /* Clickable title */
+        .notice-table .title-col a {
+            cursor: pointer;
+        }
+        
+        .notice-table .title-col a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="font-pretendard bg-gray-50">
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <!-- 로고 영역 (사이드바 너비와 동일) -->
+        <div class="top-bar-brand"></div>
+        
+        <!-- 메인 영역 (컨텐츠와 정렬) -->
+        <div class="top-bar-main">
+            <div class="top-bar-left">
+                <button class="top-bar-toggle" onclick="toggleSidebar()" title="사이드바 토글">
+                    <i data-lucide="panel-left-close" class="w-5 h-5" id="sidebar-toggle-icon"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <span class="top-bar-title">공지사항</span>
+            </div>
+            
+            <div class="top-bar-center">
+                <div class="top-bar-search">
+                    <i data-lucide="search" class="search-icon w-4 h-4"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="top-bar-right">
+                <button class="top-bar-icon" title="알림">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="badge-dot"></span>
+                </button>
+                <button class="top-bar-icon" title="설정">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                </button>
+                <button class="top-bar-icon" title="도움말">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <button class="top-bar-icon" onclick="toggleFullscreen()" title="전체화면" id="fullscreenBtn">
+                    <i data-lucide="maximize" class="w-5 h-5" id="fullscreenIcon"></i>
+                </button>
+                <div class="language-select">
+                    <button class="top-bar-icon" onclick="toggleLanguageMenu()" title="언어선택" id="langBtn">
+                        <span class="lang-code">KO</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option active" onclick="selectLanguage('ko', 'KO')">
+                            <span>🇰🇷</span> 한국어
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('en', 'EN')">
+                            <span>🇺🇸</span> English
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('ja', 'JP')">
+                            <span>🇯🇵</span> 日本語
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('zh', 'CN')">
+                            <span>🇨🇳</span> 中文
+                        </button>
+                    </div>
+                </div>
+                <div class="top-bar-divider"></div>
+                <div class="user-menu">
+                    <button class="user-info" onclick="toggleUserMenu()" id="userBtn">
+                        <div class="top-bar-avatar">A</div>
+                        <span class="user-name">Admin</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <div class="top-bar-avatar">A</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">Admin</span>
+                                <span class="user-dropdown-email">admin@expert.com</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item" onclick="goToMyPage()">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            내 정보
+                        </button>
+                        <button class="user-dropdown-item" onclick="goToSettings()">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            설정
+                        </button>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item text-red-500" onclick="logout()">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <a href="../index.html" class="sidebar-logo">
+                <span class="logo-full">eXpert slim X</span>
+                <span class="logo-short">SL</span>
+            </a>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1 px-3">
+                    <!-- HOME -->
+                    <li>
+                        <a href="../index.html" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="HOME">
+                            <i data-lucide="home" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">HOME</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 주문접수 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-register')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문접수">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="plus-circle" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문접수</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-register-arrow"></i>
+                        </button>
+                        <ul id="order-register" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="bulk-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a></li>
+                            <li><a href="auto-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동등록(API)</a></li>
+                            <li><a href="auto-collection-settings.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록 설정</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 주문관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-manage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="clipboard-list" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-manage-arrow"></i>
+                        </button>
+                        <ul id="order-manage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="order-management.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관 관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 발송내역 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="발송내역">
+                            <i data-lucide="truck" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">발송내역</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 상품관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="상품관리">
+                            <i data-lucide="package" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">상품관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 창고관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="창고관리">
+                            <i data-lucide="warehouse" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">창고관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 재배송/회수 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="재배송/회수">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">재배송/회수</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 공지/문의 관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('notice')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="공지/문의 관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="message-square" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">공지/문의 관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow rotate-180" id="notice-arrow"></i>
+                        </button>
+                        <ul id="notice" class="submenu open pl-11 space-y-1 mt-1">
+                            <li><a href="notice.html" class="block py-2 px-3 text-sm text-blue-600 font-medium rounded bg-blue-50">공지사항</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 정산관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('settlement')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="정산관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="calculator" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">정산관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="settlement-arrow"></i>
+                        </button>
+                        <ul id="settlement" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- My Page -->
+                    <li>
+                        <button onclick="toggleSubmenu('mypage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="My Page">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="user" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">My Page</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="mypage-arrow"></i>
+                        </button>
+                        <ul id="mypage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a></li>
+                            <li><a href="api-integration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Footer -->
+            <div class="sidebar-footer p-4 border-t border-gray-100 text-xs text-gray-400">
+                <span>© SWKIM eXpert slim X</span>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content flex-1">
+            <div class="p-6">
+                <!-- Notice Table Card -->
+                <div class="bg-white overflow-hidden">
+                    <!-- Filter Bar -->
+                    <div class="filter-bar">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all" onclick="filterNotice('all', this)">전체</button>
+                            <button class="filter-btn" data-filter="request" onclick="filterNotice('request', this)">요청</button>
+                            <button class="filter-btn" data-filter="customs" onclick="filterNotice('customs', this)">통관</button>
+                            <button class="filter-btn" data-filter="logistics" onclick="filterNotice('logistics', this)">물류센터</button>
+                            <button class="filter-btn" data-filter="system" onclick="filterNotice('system', this)">시스템(업데이트)</button>
+                            <button class="filter-btn" data-filter="news" onclick="filterNotice('news', this)">뉴스</button>
+                            <button class="filter-btn important" data-filter="important" onclick="filterNotice('important', this)">중요</button>
+                        </div>
+                        <button class="write-btn" onclick="openWriteModal()">
+                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                            작성하기
+                        </button>
+                    </div>
+                    
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="notice-table">
+                            <thead>
+                                <tr>
+                                    <th class="no-col">번호</th>
+                                    <th class="title-col">제목</th>
+                                    <th class="category-col">분류</th>
+                                    <th class="important-col">중요</th>
+                                    <th class="attachment-col">첨부파일</th>
+                                    <th class="date-col">등록일</th>
+                                </tr>
+                            </thead>
+                            <tbody id="noticeTableBody">
+                                <!-- 데이터는 JavaScript로 렌더링 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <span class="pagination-info">Page Size:</span>
+                        <select class="page-size-select" id="pageSize" onchange="changePageSize()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span class="pagination-info" id="pageInfo">1 to 8 of 8</span>
+                        <div class="pagination" id="pagination">
+                            <!-- 페이지네이션 버튼은 JavaScript로 렌더링 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Write Notice Modal -->
+    <div id="writeNoticeModal" class="modal-overlay hidden">
+        <div class="modal-container modal-lg">
+            <div class="modal-header modal-header-primary">
+                <h3 class="modal-title">공지사항 관리</h3>
+                <button class="modal-close" onclick="closeWriteModal()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="noticeForm" onsubmit="submitNotice(event)">
+                    <!-- 제목 -->
+                    <div class="form-group">
+                        <label class="form-label required">제목</label>
+                        <input type="text" class="form-input" id="noticeTitle" placeholder="제목을 입력하세요" required>
+                    </div>
+                    
+                    <!-- 부가 정보 -->
+                    <div class="form-group">
+                        <label class="form-label required">부가 정보</label>
+                        <div class="form-row">
+                            <select class="form-select" id="noticeCategory" required>
+                                <option value="">카테고리 선택</option>
+                                <option value="request">요청</option>
+                                <option value="customs">통관</option>
+                                <option value="logistics">물류센터</option>
+                                <option value="system">시스템(업데이트)</option>
+                                <option value="news">뉴스</option>
+                            </select>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="noticePinned">
+                                <span>고정</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="noticeImportant">
+                                <span>중요</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 첨부 파일 -->
+                    <div class="form-group">
+                        <label class="form-label">첨부 파일</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <div class="file-upload-content">
+                                <p class="file-upload-text">마우스 파일을 끌어 놓으세요.</p>
+                                <div class="file-upload-btn-row">
+                                    <label class="file-upload-btn">
+                                        파일 선택
+                                        <input type="file" id="noticeFile" multiple hidden onchange="handleFileSelect(event)">
+                                    </label>
+                                    <span class="file-upload-info" id="fileInfo">선택된 파일 없음</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 작성 내용 -->
+                    <div class="form-group">
+                        <label class="form-label required">작성 내용</label>
+                        <div class="editor-container">
+                            <div class="editor-toolbar">
+                                <select class="editor-select" title="글꼴">
+                                    <option>본문</option>
+                                    <option>제목1</option>
+                                    <option>제목2</option>
+                                </select>
+                                <select class="editor-select" title="크기">
+                                    <option>9pt</option>
+                                    <option selected>12pt</option>
+                                    <option>14pt</option>
+                                    <option>18pt</option>
+                                </select>
+                                <div class="editor-divider"></div>
+                                <button type="button" class="editor-btn" title="굵게"><b>가</b></button>
+                                <button type="button" class="editor-btn" title="기울임"><i>가</i></button>
+                                <button type="button" class="editor-btn" title="밑줄"><u>가</u></button>
+                                <button type="button" class="editor-btn" title="취소선"><s>가</s></button>
+                                <div class="editor-divider"></div>
+                                <button type="button" class="editor-btn" title="링크"><i data-lucide="link" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="이미지"><i data-lucide="image" class="w-4 h-4"></i></button>
+                                <div class="editor-divider"></div>
+                                <button type="button" class="editor-btn" title="왼쪽 정렬"><i data-lucide="align-left" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="가운데 정렬"><i data-lucide="align-center" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="오른쪽 정렬"><i data-lucide="align-right" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="양쪽 정렬"><i data-lucide="align-justify" class="w-4 h-4"></i></button>
+                                <div class="editor-divider"></div>
+                                <button type="button" class="editor-btn" title="목록"><i data-lucide="list" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="번호 목록"><i data-lucide="list-ordered" class="w-4 h-4"></i></button>
+                                <div class="editor-divider"></div>
+                                <button type="button" class="editor-btn" title="표"><i data-lucide="table" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="코드"><i data-lucide="code" class="w-4 h-4"></i></button>
+                                <button type="button" class="editor-btn" title="인용"><i data-lucide="quote" class="w-4 h-4"></i></button>
+                                <div class="editor-spacer"></div>
+                                <span class="editor-mode">Editor</span>
+                                <span class="editor-mode">HTML</span>
+                                <span class="editor-mode">TEXT</span>
+                            </div>
+                            <div class="editor-content" contenteditable="true" id="noticeContent" placeholder="내용을 입력하세요..."></div>
+                            <div class="editor-footer">
+                                <span class="editor-notice">이미지 업로드는 10MB까지 가능합니다. 너무 많은 수시건은 로딩이 느려집니다.</span>
+                                <span class="editor-help">※ 보안상 이유 노출</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="closeWriteModal()">취소</button>
+                <button type="button" class="btn btn-primary" onclick="submitNotice()">저장</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Notice Modal -->
+    <div id="viewNoticeModal" class="modal-overlay hidden">
+        <div class="modal-container modal-lg">
+            <div class="modal-header modal-header-primary">
+                <h3 class="modal-title" id="viewNoticeTitle">공지사항</h3>
+                <button class="modal-close" onclick="closeViewModal()">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="view-notice-meta">
+                    <span class="view-notice-category" id="viewNoticeCategory"></span>
+                    <span class="view-notice-date" id="viewNoticeDate"></span>
+                </div>
+                <div class="view-notice-content" id="viewNoticeContent">
+                    <!-- 내용 표시 -->
+                </div>
+                <div class="view-notice-attachment" id="viewNoticeAttachment" style="display: none;">
+                    <i data-lucide="paperclip" class="w-4 h-4"></i>
+                    <span>첨부파일이 있습니다.</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeViewModal()">닫기</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/main.js"></script>
+    <script>
+        // Notice Data (이미지 참고)
+        const noticeData = [
+            { no: '고정', title: '25년 06월 02일_EXMATE 기타국가 배송비 변경의 건', category: 'request', isImportant: false, hasAttachment: false, date: '2025-06-04 13:06:13' },
+            { no: 7, title: '4월 제가 프로모션 안전 창어물류센터 운영 일정 안내', category: 'logistics', isImportant: true, hasAttachment: false, date: '2025-05-30 10:25:23' },
+            { no: 6, title: '[오불호] EXMATE 기타서가 배송비 변경의 건', category: 'request', isImportant: false, hasAttachment: false, date: '2025-05-30 10:25:23' },
+            { no: 5, title: '인천 1 센터(정리) _평일/수령/금휴일/야간 창고 이사 안내', category: 'logistics', isImportant: false, hasAttachment: false, date: '2025-05-27 15:10:07' },
+            { no: 4, title: '시간당 통관 안내 : 시스템 능오 및 정기 제품 검역 요청', category: 'customs', isImportant: false, hasAttachment: true, date: '2025-05-26 20:29:27' },
+            { no: 3, title: '5월 소 연휴기간 물류센터 운영일정 안내', category: 'logistics', isImportant: false, hasAttachment: true, date: '2025-05-15 16:48:54' },
+            { no: 2, title: '25년 6월_한국발 국제선_항공요금 유류할증료(FSC) 요율 결의', category: 'news', isImportant: false, hasAttachment: true, date: '2025-05-02 13:27:11' },
+            { no: 1, title: '25년 5월_가격간 국제선_화공요금 유류할증료(FSC) 요율 #리자', category: 'news', isImportant: false, hasAttachment: false, date: '2025-04-22 13:10:41' }
+        ];
+        
+        let currentPage = 1;
+        let pageSize = 50;
+        let currentFilter = 'all';
+        let filteredData = [...noticeData];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initSidebarState();
+            renderTable();
+            renderPagination();
+        });
+        
+        // Toggle Submenu
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const arrow = document.getElementById(id + '-arrow');
+            
+            if (submenu) {
+                submenu.classList.toggle('open');
+                if (arrow) {
+                    arrow.classList.toggle('rotate-180');
+                }
+            }
+        }
+        
+        // Filter Notice
+        function filterNotice(filter, btn) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentFilter = filter;
+            currentPage = 1;
+            
+            if (filter === 'all') {
+                filteredData = [...noticeData];
+            } else if (filter === 'important') {
+                filteredData = noticeData.filter(item => item.isImportant);
+            } else {
+                filteredData = noticeData.filter(item => item.category === filter);
+            }
+            
+            renderTable();
+            renderPagination();
+        }
+        
+        // Get category badge HTML
+        function getCategoryBadge(category) {
+            const categories = {
+                'request': { label: '요청', class: 'request' },
+                'customs': { label: '통관', class: 'customs' },
+                'logistics': { label: '물류센터', class: 'logistics' },
+                'system': { label: '시스템', class: 'system' },
+                'news': { label: '뉴스', class: 'news' }
+            };
+            
+            const cat = categories[category];
+            if (cat) {
+                return `<span class="category-badge ${cat.class}">${cat.label}</span>`;
+            }
+            return '';
+        }
+        
+        // Render Table
+        function renderTable() {
+            const tbody = document.getElementById('noticeTableBody');
+            const start = (currentPage - 1) * pageSize;
+            const end = Math.min(start + pageSize, filteredData.length);
+            const pageData = filteredData.slice(start, end);
+            
+            if (pageData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-12 text-gray-500">
+                            데이터가 없습니다.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = pageData.map((item, index) => {
+                const dataIndex = start + index;
+                return `
+                    <tr onclick="viewNotice(${dataIndex})" style="cursor: pointer;">
+                        <td class="no-col">${item.no}</td>
+                        <td class="title-col">
+                            <a href="javascript:void(0)">${item.title}</a>
+                        </td>
+                        <td class="category-col">${getCategoryBadge(item.category)}</td>
+                        <td class="important-col">
+                            ${item.isImportant ? '<span class="important-badge">중요</span>' : ''}
+                        </td>
+                        <td class="attachment-col">
+                            ${item.hasAttachment ? '<i data-lucide="paperclip" class="w-4 h-4 attachment-icon has-file inline-block"></i>' : '<i data-lucide="paperclip" class="w-4 h-4 attachment-icon inline-block opacity-30"></i>'}
+                        </td>
+                        <td class="date-col">${item.date}</td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Re-initialize icons for new elements
+            lucide.createIcons();
+            
+            // Update page info
+            const totalItems = filteredData.length;
+            const startItem = totalItems > 0 ? start + 1 : 0;
+            const endItem = Math.min(end, totalItems);
+            document.getElementById('pageInfo').textContent = `${startItem} to ${endItem} of ${totalItems}`;
+        }
+        
+        // Render Pagination
+        function renderPagination() {
+            const totalPages = Math.max(1, Math.ceil(filteredData.length / pageSize));
+            const pagination = document.getElementById('pagination');
+            
+            let html = '';
+            
+            // First & Previous buttons
+            html += `
+                <button class="pagination-btn" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="처음">
+                    <i data-lucide="chevrons-left" class="w-4 h-4"></i>
+                </button>
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="이전">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+            `;
+            
+            // Page info
+            html += `<span class="pagination-info px-2">Page ${currentPage} of ${totalPages}</span>`;
+            
+            // Next & Last buttons
+            html += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="다음">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+                <button class="pagination-btn" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="마지막">
+                    <i data-lucide="chevrons-right" class="w-4 h-4"></i>
+                </button>
+            `;
+            
+            pagination.innerHTML = html;
+            lucide.createIcons();
+        }
+        
+        // Go to page
+        function goToPage(page) {
+            const totalPages = Math.max(1, Math.ceil(filteredData.length / pageSize));
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderTable();
+            renderPagination();
+        }
+        
+        // Change page size
+        function changePageSize() {
+            pageSize = parseInt(document.getElementById('pageSize').value);
+            currentPage = 1;
+            renderTable();
+            renderPagination();
+        }
+        
+        // View notice detail
+        function viewNotice(index) {
+            const item = filteredData[index];
+            if (!item) return;
+            
+            const modal = document.getElementById('viewNoticeModal');
+            document.getElementById('viewNoticeTitle').textContent = item.title;
+            
+            // Category
+            const categories = {
+                'request': '요청',
+                'customs': '통관',
+                'logistics': '물류센터',
+                'system': '시스템',
+                'news': '뉴스'
+            };
+            document.getElementById('viewNoticeCategory').textContent = categories[item.category] || item.category;
+            
+            // Date
+            document.getElementById('viewNoticeDate').textContent = item.date;
+            
+            // Content (현재 데이터에 content가 없으므로 공란)
+            document.getElementById('viewNoticeContent').innerHTML = item.content || '';
+            
+            // Attachment
+            const attachmentEl = document.getElementById('viewNoticeAttachment');
+            if (item.hasAttachment) {
+                attachmentEl.style.display = 'flex';
+            } else {
+                attachmentEl.style.display = 'none';
+            }
+            
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+        
+        // Close view modal
+        function closeViewModal() {
+            const modal = document.getElementById('viewNoticeModal');
+            modal.classList.add('hidden');
+        }
+        
+        // Open write modal
+        function openWriteModal() {
+            const modal = document.getElementById('writeNoticeModal');
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+            
+            // Reset form
+            document.getElementById('noticeForm').reset();
+            document.getElementById('noticeContent').innerHTML = '';
+            document.getElementById('fileInfo').textContent = '선택된 파일 없음';
+        }
+        
+        // Close write modal
+        function closeWriteModal() {
+            const modal = document.getElementById('writeNoticeModal');
+            modal.classList.add('hidden');
+        }
+        
+        // Handle file select
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                const fileNames = Array.from(files).map(f => f.name).join(', ');
+                document.getElementById('fileInfo').textContent = fileNames;
+            } else {
+                document.getElementById('fileInfo').textContent = '선택된 파일 없음';
+            }
+        }
+        
+        // Submit notice
+        function submitNotice(event) {
+            if (event) event.preventDefault();
+            
+            const title = document.getElementById('noticeTitle').value;
+            const category = document.getElementById('noticeCategory').value;
+            const content = document.getElementById('noticeContent').innerHTML;
+            const isPinned = document.getElementById('noticePinned').checked;
+            const isImportant = document.getElementById('noticeImportant').checked;
+            
+            if (!title) {
+                alert('제목을 입력하세요.');
+                return;
+            }
+            
+            if (!category) {
+                alert('카테고리를 선택하세요.');
+                return;
+            }
+            
+            if (!content.trim()) {
+                alert('내용을 입력하세요.');
+                return;
+            }
+            
+            // Add to noticeData
+            const newNotice = {
+                no: isPinned ? '고정' : noticeData.length + 1,
+                title: title,
+                category: category,
+                isImportant: isImportant,
+                hasAttachment: document.getElementById('noticeFile').files.length > 0,
+                date: new Date().toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                }).replace(/\./g, '-').replace(' ', ' ')
+            };
+            
+            noticeData.unshift(newNotice);
+            filteredData = [...noticeData];
+            
+            renderTable();
+            renderPagination();
+            closeWriteModal();
+            
+            alert('공지사항이 등록되었습니다.');
+        }
+        
+        // Drag and drop file upload
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        if (fileUploadArea) {
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.classList.remove('dragover');
+            });
+            
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                document.getElementById('noticeFile').files = files;
+                handleFileSelect({ target: { files: files } });
+            });
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eXpert slim X - 자동 등록 설정</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Flatpickr for Date Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        /* Auto Collection Settings Specific Styles */
+        .settings-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .settings-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .settings-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .settings-desc {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            background: #d1d5db;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: #2563eb;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+        
+        /* Section Title with Icon */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+        
+        .section-title i {
+            color: #6b7280;
+        }
+        
+        /* Schedule Row */
+        .schedule-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .schedule-label {
+            font-size: 14px;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+        
+        .schedule-input {
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1f2937;
+            background: white;
+            min-width: 200px;
+        }
+        
+        .schedule-select {
+            padding: 10px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1f2937;
+            background: white;
+            min-width: 140px;
+            cursor: pointer;
+        }
+        
+        /* Day Buttons */
+        .day-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .day-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .day-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+        
+        .day-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+        
+        /* Shop Buttons */
+        .shop-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .shop-btn {
+            padding: 10px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .shop-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+        
+        .shop-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+        
+        /* Radio Card */
+        .radio-cards {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .radio-card {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .radio-card:hover {
+            border-color: #93c5fd;
+        }
+        
+        .radio-card.active {
+            border-color: #2563eb;
+            background: #f0f7ff;
+        }
+        
+        .radio-card input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #2563eb;
+        }
+        
+        .radio-card-text {
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        /* Footer Actions */
+        .settings-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 8px;
+        }
+        
+        /* Disabled State */
+        .settings-content.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-pretendard bg-gray-50">
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <!-- 로고 영역 (사이드바 너비와 동일) -->
+        <div class="top-bar-brand"></div>
+        
+        <!-- 메인 영역 (컨텐츠와 정렬) -->
+        <div class="top-bar-main">
+            <div class="top-bar-left">
+                <button class="top-bar-toggle" onclick="toggleSidebar()" title="사이드바 토글">
+                    <i data-lucide="panel-left-close" class="w-5 h-5" id="sidebar-toggle-icon"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <span class="top-bar-title">자동 등록 설정</span>
+            </div>
+            
+            <div class="top-bar-center">
+                <div class="top-bar-search">
+                    <i data-lucide="search" class="search-icon w-4 h-4"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="top-bar-right">
+                <button class="top-bar-icon" title="알림">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="badge-dot"></span>
+                </button>
+                <button class="top-bar-icon" title="설정">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                </button>
+                <button class="top-bar-icon" title="도움말">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <button class="top-bar-icon" onclick="toggleFullscreen()" title="전체화면" id="fullscreenBtn">
+                    <i data-lucide="maximize" class="w-5 h-5" id="fullscreenIcon"></i>
+                </button>
+                <div class="language-select">
+                    <button class="top-bar-icon" onclick="toggleLanguageMenu()" title="언어선택" id="langBtn">
+                        <span class="lang-code">KO</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option active" onclick="selectLanguage('ko', 'KO')">
+                            <span>🇰🇷</span> 한국어
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('en', 'EN')">
+                            <span>🇺🇸</span> English
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('ja', 'JP')">
+                            <span>🇯🇵</span> 日本語
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('zh', 'CN')">
+                            <span>🇨🇳</span> 中文
+                        </button>
+                    </div>
+                </div>
+                <div class="top-bar-divider"></div>
+                <div class="user-menu">
+                    <button class="user-info" onclick="toggleUserMenu()" id="userBtn">
+                        <div class="top-bar-avatar">A</div>
+                        <span class="user-name">Admin</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <div class="top-bar-avatar">A</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">Admin</span>
+                                <span class="user-dropdown-email">admin@expert.com</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item" onclick="goToMyPage()">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            내 정보
+                        </button>
+                        <button class="user-dropdown-item" onclick="goToSettings()">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            설정
+                        </button>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item text-red-500" onclick="logout()">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <a href="../index.html" class="sidebar-logo">
+                <span class="logo-full">eXpert slim X</span>
+                <span class="logo-short">SL</span>
+            </a>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 overflow-y-auto py-4">
+                <ul class="space-y-1 px-3">
+                    <!-- HOME -->
+                    <li>
+                        <a href="../index.html" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="HOME">
+                            <i data-lucide="home" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">HOME</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 주문접수 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-register')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문접수">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="plus-circle" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문접수</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow rotate-180" id="order-register-arrow"></i>
+                        </button>
+                        <ul id="order-register" class="submenu open pl-11 space-y-1 mt-1">
+                            <li><a href="bulk-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a></li>
+                            <li><a href="auto-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동등록(API)</a></li>
+                            <li><a href="auto-collection-settings.html" class="block py-2 px-3 text-sm text-blue-600 font-medium rounded bg-blue-50">자동 등록 설정</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 주문관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('order-manage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="clipboard-list" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">주문관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-manage-arrow"></i>
+                        </button>
+                        <ul id="order-manage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="order-management.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관 관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 발송내역 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="발송내역">
+                            <i data-lucide="truck" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">발송내역</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 상품관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="상품관리">
+                            <i data-lucide="package" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">상품관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 창고관리 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="창고관리">
+                            <i data-lucide="warehouse" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">창고관리</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 재배송/회수 -->
+                    <li>
+                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="재배송/회수">
+                            <i data-lucide="refresh-cw" class="w-5 h-5 flex-shrink-0"></i>
+                            <span class="menu-text">재배송/회수</span>
+                        </a>
+                    </li>
+                    
+                    <!-- 공지/문의 관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('notice')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="공지/문의 관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="message-square" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">공지/문의 관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="notice-arrow"></i>
+                        </button>
+                        <ul id="notice" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="notice.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- 정산관리 -->
+                    <li>
+                        <button onclick="toggleSubmenu('settlement')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="정산관리">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="calculator" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">정산관리</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="settlement-arrow"></i>
+                        </button>
+                        <ul id="settlement" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a></li>
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- My Page -->
+                    <li>
+                        <button onclick="toggleSubmenu('mypage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="My Page">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="user" class="w-5 h-5 flex-shrink-0"></i>
+                                <span class="menu-text">My Page</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="mypage-arrow"></i>
+                        </button>
+                        <ul id="mypage" class="submenu pl-11 space-y-1 mt-1">
+                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a></li>
+                            <li><a href="api-integration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Footer -->
+            <div class="sidebar-footer p-4 border-t border-gray-100 text-xs text-gray-400">
+                <span>© SWKIM eXpert slim X</span>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="p-6">
+                <!-- Settings Container -->
+                <div class="max-w-4xl">
+                    <!-- 자동 수집 활성화 -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <div>
+                                <h2 class="settings-title">자동 수집 활성화</h2>
+                                <p class="settings-desc">이 기능을 켜면 설정된 스케줄에 따라 자동으로 주문을 수집합니다.</p>
+                            </div>
+                            <div class="toggle-switch active" id="autoCollectionToggle" onclick="toggleAutoCollection()"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Content (활성화 시 표시) -->
+                    <div id="settingsContent" class="settings-content">
+                        <!-- 수집 스케줄 설정 -->
+                        <div class="settings-card">
+                            <div class="section-title">
+                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                                <span>수집 스케줄 설정</span>
+                            </div>
+                            
+                            <div class="schedule-row mb-5">
+                                <div class="schedule-item">
+                                    <span class="schedule-label">수집 기간</span>
+                                    <div class="relative">
+                                        <input type="text" id="dateRange" class="schedule-input" placeholder="날짜 선택" readonly>
+                                        <i data-lucide="calendar" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="schedule-item">
+                                    <span class="schedule-label">수집 주기</span>
+                                    <select class="schedule-select" id="collectInterval">
+                                        <option value="1">1분마다</option>
+                                        <option value="5" selected>5분마다</option>
+                                        <option value="10">10분마다</option>
+                                        <option value="30">30분마다</option>
+                                        <option value="60">1시간마다</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="schedule-item">
+                                    <span class="schedule-label">요일</span>
+                                    <div class="day-buttons">
+                                        <button class="day-btn active" data-day="mon" onclick="toggleDay(this)">월</button>
+                                        <button class="day-btn active" data-day="tue" onclick="toggleDay(this)">화</button>
+                                        <button class="day-btn active" data-day="wed" onclick="toggleDay(this)">수</button>
+                                        <button class="day-btn active" data-day="thu" onclick="toggleDay(this)">목</button>
+                                        <button class="day-btn active" data-day="fri" onclick="toggleDay(this)">금</button>
+                                        <button class="day-btn" data-day="sat" onclick="toggleDay(this)">토</button>
+                                        <button class="day-btn" data-day="sun" onclick="toggleDay(this)">일</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 수집 대상 쇼핑몰 -->
+                        <div class="settings-card">
+                            <div class="section-title">
+                                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                                <span>수집 대상 쇼핑몰</span>
+                            </div>
+                            
+                            <div class="shop-buttons">
+                                <button class="shop-btn active" data-shop="qoo10" onclick="toggleShop(this)">Qoo10</button>
+                                <button class="shop-btn active" data-shop="rakuten" onclick="toggleShop(this)">Rakuten</button>
+                                <button class="shop-btn" data-shop="playauto" onclick="toggleShop(this)">PlayAuto</button>
+                                <button class="shop-btn" data-shop="nhn" onclick="toggleShop(this)">NHN</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 수집 후 자동 전송 -->
+                        <div class="settings-card">
+                            <div class="section-title">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                <span>수집 후 자동 전송</span>
+                            </div>
+                            
+                            <div class="radio-cards">
+                                <label class="radio-card active" onclick="selectTransferOption(this, 'auto')">
+                                    <input type="radio" name="transferOption" value="auto" checked>
+                                    <span class="radio-card-text">수집 완료 후 '배송준비' 상태로 자동 전송합니다.</span>
+                                </label>
+                                
+                                <label class="radio-card" onclick="selectTransferOption(this, 'manual')">
+                                    <input type="radio" name="transferOption" value="manual">
+                                    <span class="radio-card-text">수집만 수행합니다. (전송은 수동으로 진행)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer Actions -->
+                        <div class="settings-card">
+                            <div class="settings-footer">
+                                <button class="btn-secondary" onclick="cancelSettings()">취소</button>
+                                <button class="btn-secondary" onclick="testCollection()">테스트</button>
+                                <button class="btn-primary" onclick="saveSettings()">저장</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initSidebarState();
+            initDatePicker();
+        });
+        
+        // Toggle Submenu
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const arrow = document.getElementById(id + '-arrow');
+            
+            if (submenu) {
+                submenu.classList.toggle('open');
+                if (arrow) {
+                    arrow.classList.toggle('rotate-180');
+                }
+            }
+        }
+        
+        // Initialize Date Picker
+        function initDatePicker() {
+            flatpickr("#dateRange", {
+                mode: "range",
+                dateFormat: "Ymd",
+                locale: "ko",
+                defaultDate: [new Date(), new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)],
+                onChange: function(selectedDates, dateStr, instance) {
+                    // 날짜 선택 시 처리
+                }
+            });
+        }
+        
+        // Toggle Auto Collection
+        function toggleAutoCollection() {
+            const toggle = document.getElementById('autoCollectionToggle');
+            const content = document.getElementById('settingsContent');
+            
+            toggle.classList.toggle('active');
+            
+            if (toggle.classList.contains('active')) {
+                content.classList.remove('disabled');
+            } else {
+                content.classList.add('disabled');
+            }
+        }
+        
+        // Toggle Day
+        function toggleDay(btn) {
+            btn.classList.toggle('active');
+        }
+        
+        // Toggle Shop
+        function toggleShop(btn) {
+            btn.classList.toggle('active');
+        }
+        
+        // Select Transfer Option
+        function selectTransferOption(card, value) {
+            document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+        }
+        
+        // Cancel Settings
+        function cancelSettings() {
+            if (confirm('변경사항을 저장하지 않고 나가시겠습니까?')) {
+                window.history.back();
+            }
+        }
+        
+        // Test Collection
+        function testCollection() {
+            const selectedShops = Array.from(document.querySelectorAll('.shop-btn.active'))
+                .map(btn => btn.dataset.shop);
+            
+            if (selectedShops.length === 0) {
+                showToast('수집 대상 쇼핑몰을 선택해주세요.', 'warning');
+                return;
+            }
+            
+            showToast('테스트 수집을 시작합니다...', 'info');
+            
+            // 시뮬레이션
+            setTimeout(() => {
+                showToast('테스트 수집이 완료되었습니다. (5건 수집)', 'success');
+            }, 2000);
+        }
+        
+        // Save Settings
+        function saveSettings() {
+            const isEnabled = document.getElementById('autoCollectionToggle').classList.contains('active');
+            const dateRange = document.getElementById('dateRange').value;
+            const interval = document.getElementById('collectInterval').value;
+            const selectedDays = Array.from(document.querySelectorAll('.day-btn.active'))
+                .map(btn => btn.dataset.day);
+            const selectedShops = Array.from(document.querySelectorAll('.shop-btn.active'))
+                .map(btn => btn.dataset.shop);
+            const transferOption = document.querySelector('input[name="transferOption"]:checked').value;
+            
+            // Validation
+            if (isEnabled && selectedDays.length === 0) {
+                showToast('수집 요일을 선택해주세요.', 'warning');
+                return;
+            }
+            
+            if (isEnabled && selectedShops.length === 0) {
+                showToast('수집 대상 쇼핑몰을 선택해주세요.', 'warning');
+                return;
+            }
+            
+            // Save
+            const settings = {
+                enabled: isEnabled,
+                dateRange: dateRange,
+                interval: interval,
+                days: selectedDays,
+                shops: selectedShops,
+                transferOption: transferOption
+            };
+            
+            console.log('Saving settings:', settings);
+            localStorage.setItem('autoCollectionSettings', JSON.stringify(settings));
+            
+            showToast('설정이 저장되었습니다.', 'success');
+        }
+    </script>
+</body>
+</html>
+
