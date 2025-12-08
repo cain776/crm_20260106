@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eXpert slim X - 자동등록(API)</title>
-    
+    <title>QPEED - 자동등록(API)</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Pretendard Font -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- Flatpickr Date Picker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
-    
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body class="font-pretendard bg-gray-50">
     <!-- Top Bar -->
     <header class="top-bar">
         <!-- 로고 영역 (사이드바 너비와 동일) -->
         <div class="top-bar-brand"></div>
-        
+
         <!-- 메인 영역 (컨텐츠와 정렬) -->
         <div class="top-bar-main">
             <div class="top-bar-left">
@@ -37,14 +40,14 @@
                 <div class="top-bar-divider"></div>
                 <span class="top-bar-title">자동등록(API)</span>
             </div>
-            
+
             <div class="top-bar-center">
                 <div class="top-bar-search">
                     <i data-lucide="search" class="search-icon w-4 h-4"></i>
                     <input type="text" placeholder="Search...">
                 </div>
             </div>
-            
+
             <div class="top-bar-right">
                 <button class="top-bar-icon" title="알림">
                     <i data-lucide="bell" class="w-5 h-5"></i>
@@ -113,143 +116,190 @@
             </div>
         </div>
     </header>
-    
+
     <div class="flex">
         <!-- Sidebar -->
         <aside class="sidebar">
             <!-- Logo -->
             <a href="../index.html" class="sidebar-logo">
-                <span class="logo-full">eXpert slim X</span>
-                <span class="logo-short">SL</span>
+                <span class="logo-full">QPEED</span>
+                <span class="logo-short">QP</span>
             </a>
-            
+
             <!-- Navigation -->
             <nav class="flex-1 overflow-y-auto py-4">
                 <ul class="space-y-1 px-3">
                     <!-- HOME -->
                     <li>
-                        <a href="../index.html" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="HOME">
+                        <a href="../index.html"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="HOME">
                             <i data-lucide="home" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">HOME</span>
                         </a>
                     </li>
-                    
+
                     <!-- 주문접수 -->
                     <li>
-                        <button onclick="toggleSubmenu('order-register')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문접수">
+                        <button onclick="toggleSubmenu('order-register')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="주문접수">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="plus-circle" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">주문접수</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow rotate-180" id="order-register-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow rotate-180"
+                                id="order-register-arrow"></i>
                         </button>
                         <ul id="order-register" class="submenu open pl-11 space-y-1 mt-1">
-                            <li><a href="bulk-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a></li>
-                            <li><a href="auto-registration.html" class="block py-2 px-3 text-sm text-blue-600 font-medium rounded bg-blue-50">자동등록(API)</a></li>
-                            <li><a href="auto-collection-settings.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록 설정</a></li>
+                            <li><a href="bulk-registration.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a>
+                            </li>
+                            <li><a href="auto-registration.html"
+                                    class="block py-2 px-3 text-sm text-blue-600 font-medium rounded bg-blue-50">자동등록(API)</a>
+                            </li>
+                            <li><a href="auto-collection-settings.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록
+                                    설정</a></li>
                         </ul>
                     </li>
-                    
+
                     <!-- 주문관리 -->
                     <li>
-                        <button onclick="toggleSubmenu('order-manage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문관리">
+                        <button onclick="toggleSubmenu('order-manage')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="주문관리">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="clipboard-list" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">주문관리</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-manage-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="order-manage-arrow"></i>
                         </button>
                         <ul id="order-manage" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="order-management.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a></li>
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관 관리</a></li>
+                            <li><a href="order-management.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관
+                                    관리</a></li>
                         </ul>
                     </li>
-                    
+
                     <!-- 발송내역 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="발송내역">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="발송내역">
                             <i data-lucide="truck" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">발송내역</span>
                         </a>
                     </li>
-                    
+
                     <!-- 상품관리 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="상품관리">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="상품관리">
                             <i data-lucide="package" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">상품관리</span>
                         </a>
                     </li>
-                    
+
                     <!-- 창고관리 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="창고관리">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="창고관리">
                             <i data-lucide="warehouse" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">창고관리</span>
                         </a>
                     </li>
-                    
+
                     <!-- 재배송/회수 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="재배송/회수">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="재배송/회수">
                             <i data-lucide="refresh-cw" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">재배송/회수</span>
                         </a>
                     </li>
-                    
+
                     <!-- 공지/문의 관리 -->
                     <li>
-                        <button onclick="toggleSubmenu('notice')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="공지/문의 관리">
+                        <button onclick="toggleSubmenu('notice')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="공지/문의 관리">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="message-square" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">공지/문의 관리</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="notice-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="notice-arrow"></i>
                         </button>
                         <ul id="notice" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="notice.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a></li>
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a></li>
+                            <li><a href="notice.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a>
+                            </li>
                         </ul>
                     </li>
-                    
+
                     <!-- 정산관리 -->
                     <li>
-                        <button onclick="toggleSubmenu('settlement')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="정산관리">
+                        <button onclick="toggleSubmenu('settlement')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="정산관리">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="calculator" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">정산관리</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="settlement-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="settlement-arrow"></i>
                         </button>
                         <ul id="settlement" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a></li>
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a></li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a>
+                            </li>
                         </ul>
                     </li>
-                    
+
                     <!-- My Page -->
                     <li>
-                        <button onclick="toggleSubmenu('mypage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="My Page">
+                        <button onclick="toggleSubmenu('mypage')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="My Page">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="user" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">My Page</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="mypage-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="mypage-arrow"></i>
                         </button>
                         <ul id="mypage" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a></li>
-                            <li><a href="api-integration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a></li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a>
+                            </li>
+                            <li><a href="api-integration.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
             </nav>
-            
+
             <!-- Footer -->
             <div class="sidebar-footer p-4 border-t border-gray-100 text-xs text-gray-400">
-                <span>© SWKIM eXpert slim X</span>
+                <span>© SWKIM QPEED</span>
             </div>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content flex-1">
             <!-- Page Content -->
@@ -276,7 +326,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- Filter Bar (기본 숨김) -->
                 <div class="filter-bar mb-6 hidden" id="filterBar">
                     <div class="filter-bar-left">
@@ -297,7 +347,7 @@
                             </span>
                             <i data-lucide="chevron-down" class="floating-select-arrow w-4 h-4"></i>
                         </div>
-                        
+
                         <!-- API ID Select -->
                         <div class="floating-select" style="min-width: 154px">
                             <select id="apiIdSelect" onchange="handleFloatingSelectChange(this)">
@@ -312,7 +362,7 @@
                             </span>
                             <i data-lucide="chevron-down" class="floating-select-arrow w-4 h-4"></i>
                         </div>
-                        
+
                         <!-- 주문상태 Select -->
                         <div class="floating-select" style="min-width: 154px">
                             <select id="orderStatusSelect" onchange="handleFloatingSelectChange(this)">
@@ -331,7 +381,7 @@
                             </span>
                             <i data-lucide="chevron-down" class="floating-select-arrow w-4 h-4"></i>
                         </div>
-                        
+
                         <!-- 날짜선택 Select -->
                         <div class="floating-select" style="min-width: 154px">
                             <select id="dateTypeSelect" onchange="handleFloatingSelectChange(this)">
@@ -346,34 +396,34 @@
                             </span>
                             <i data-lucide="chevron-down" class="floating-select-arrow w-4 h-4"></i>
                         </div>
-                        
+
                         <!-- 날짜 범위 입력 -->
                         <div class="date-range-input">
                             <i data-lucide="calendar" class="calendar-icon w-4 h-4 text-gray-400"></i>
                             <input type="text" id="dateRange" placeholder="날짜를 선택하세요" readonly>
                         </div>
                     </div>
-                    
+
                     <div class="filter-bar-right">
                         <!-- 초기화 버튼 -->
                         <button onclick="resetForm()" class="btn btn-secondary">
                             <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                             초기화
                         </button>
-                        
+
                         <!-- API 조회 버튼 -->
                         <button onclick="fetchApiOrders()" class="btn btn-primary">
                             <i data-lucide="search" class="w-4 h-4"></i>
                             API 조회
                         </button>
-                        
+
                         <!-- 설정 아이콘 버튼 -->
                         <button class="btn-icon btn-icon-secondary" title="설정">
                             <i data-lucide="settings-2" class="w-5 h-5"></i>
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- Data Table -->
                 <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
                     <!-- Select All Notice Banner -->
@@ -382,25 +432,29 @@
                             <i data-lucide="info" class="w-4 h-4"></i>
                             <span>현재 페이지의 <strong id="pageSelectCount">0</strong>건이 선택되었습니다.</span>
                             <span class="select-all-divider">|</span>
-                            <button type="button" id="btnSelectPage" class="select-notice-btn active" onclick="selectCurrentPage()">
+                            <button type="button" id="btnSelectPage" class="select-notice-btn active"
+                                onclick="selectCurrentPage()">
                                 현재 페이지만
                             </button>
-                            <button type="button" id="btnSelectAll" class="select-notice-btn" onclick="selectAllPages()">
+                            <button type="button" id="btnSelectAll" class="select-notice-btn"
+                                onclick="selectAllPages()">
                                 전체 <span id="totalSelectCount">0</span>건 선택
                             </button>
-                            <button type="button" class="select-notice-btn cancel" onclick="hideSelectAllNotice(); document.getElementById('checkAll').checked = false; toggleAllCheckbox(document.getElementById('checkAll'));">
+                            <button type="button" class="select-notice-btn cancel"
+                                onclick="hideSelectAllNotice(); document.getElementById('checkAll').checked = false; toggleAllCheckbox(document.getElementById('checkAll'));">
                                 취소
                             </button>
                         </div>
                     </div>
-                    
+
                     <!-- Table Content -->
                     <div class="overflow-x-auto">
                         <table class="data-table">
                             <thead>
                                 <tr>
                                     <th class="w-12">
-                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300" id="checkAll" onchange="toggleAllCheckbox(this)">
+                                        <input type="checkbox" class="w-4 h-4 rounded border-gray-300" id="checkAll"
+                                            onchange="toggleAllCheckbox(this)">
                                     </th>
                                     <th>No</th>
                                     <th>쇼핑몰</th>
@@ -419,7 +473,8 @@
                                 <tr id="emptyState">
                                     <td colspan="11" class="text-center py-16">
                                         <div class="flex flex-col items-center gap-3">
-                                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                                            <div
+                                                class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
                                                 <i data-lucide="cloud-download" class="w-8 h-8 text-gray-400"></i>
                                             </div>
                                             <p class="text-gray-500">API 조회 버튼을 클릭하여 주문 데이터를 불러오세요</p>
@@ -430,18 +485,20 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <!-- Table Footer -->
                     <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
                         <div class="text-sm text-gray-500">
                             선택된 항목: <span id="selectedCount">0</span>건
                         </div>
                         <div class="flex items-center gap-2">
-                            <button class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded transition" disabled>
+                            <button class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded transition"
+                                disabled>
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </button>
                             <span class="px-3 py-1.5 text-sm text-gray-900 bg-gray-100 rounded">1</span>
-                            <button class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded transition" disabled>
+                            <button class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded transition"
+                                disabled>
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </button>
                         </div>
@@ -450,18 +507,18 @@
             </div>
         </main>
     </div>
-    
+
     <!-- Custom Scripts -->
     <script src="../js/main.js"></script>
     <script src="../js/components.js"></script>
     <script>
         // Date picker instance
         let datePicker = null;
-        
+
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             initFloatingSelects();
-            
+
             // Initialize Flatpickr date range picker
             datePicker = flatpickr("#dateRange", {
                 mode: "range",
@@ -471,7 +528,7 @@
                     new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 일주일 전
                     new Date() // 오늘
                 ],
-                onChange: function(selectedDates, dateStr) {
+                onChange: function (selectedDates, dateStr) {
                     if (selectedDates.length === 2) {
                         const start = flatpickr.formatDate(selectedDates[0], "Y-m-d");
                         const end = flatpickr.formatDate(selectedDates[1], "Y-m-d");
@@ -479,58 +536,58 @@
                     }
                 }
             });
-            
+
             // Open the order-register submenu by default
             const orderRegisterSubmenu = document.getElementById('order-register');
             if (orderRegisterSubmenu) {
                 orderRegisterSubmenu.classList.add('open');
             }
         });
-        
+
         // Open date picker
         function openDatePicker() {
             if (datePicker) {
                 datePicker.open();
             }
         }
-        
+
         // Fetch API orders
         function fetchApiOrders() {
             const shop = document.getElementById('shopSelect').value;
             const apiId = document.getElementById('apiIdSelect').value;
-            
+
             if (!shop) {
                 showToast('쇼핑몰을 선택해주세요.', 'warning');
                 return;
             }
-            
+
             if (!apiId) {
                 showToast('API ID를 선택해주세요.', 'warning');
                 return;
             }
-            
+
             showToast('API 주문 데이터를 조회중입니다...', 'info');
-            
+
             // Simulate API call
             setTimeout(() => {
                 showSampleData();
                 showToast('주문 데이터 조회가 완료되었습니다.', 'success');
             }, 1000);
         }
-        
+
         // Reset form
         function resetForm() {
             clearSelect('shopSelect');
             clearSelect('apiIdSelect');
             clearSelect('orderStatusSelect');
             clearSelect('dateTypeSelect');
-            
+
             // Clear date picker
             if (datePicker) {
                 datePicker.clear();
             }
             document.getElementById('dateRange').value = '';
-            
+
             // Clear table
             const tbody = document.getElementById('dataTableBody');
             const emptyState = document.getElementById('emptyState');
@@ -539,10 +596,10 @@
             document.getElementById('emptyState').style.display = '';
             document.getElementById('dataCount').textContent = '총 0건';
             document.getElementById('selectedCount').textContent = '0';
-            
+
             showToast('초기화되었습니다.', 'info');
         }
-        
+
         // Toggle all checkbox
         function toggleAllCheckbox(checkbox) {
             if (checkbox.checked) {
@@ -556,68 +613,68 @@
                 updateSelectedCount();
             }
         }
-        
+
         // Show select all notice
         function showSelectAllNotice() {
             const pageCount = document.querySelectorAll('#dataTableBody input[type="checkbox"]').length;
             const totalCount = 856; // 실제로는 서버에서 전체 데이터 수를 가져옴
-            
+
             const notice = document.getElementById('selectAllNotice');
             document.getElementById('pageSelectCount').textContent = pageCount;
             document.getElementById('totalSelectCount').textContent = totalCount.toLocaleString();
             notice.classList.remove('hidden');
-            
+
             // 현재 페이지만 우선 선택
             selectCurrentPage();
         }
-        
+
         // Hide select all notice
         function hideSelectAllNotice() {
             const notice = document.getElementById('selectAllNotice');
             notice.classList.add('hidden');
         }
-        
+
         // Select current page only
         function selectCurrentPage() {
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]');
             checkboxes.forEach(cb => cb.checked = true);
             updateSelectedCount();
-            
+
             // 버튼 상태 업데이트
             document.getElementById('btnSelectPage').classList.add('active');
             document.getElementById('btnSelectAll').classList.remove('active');
         }
-        
+
         // Select all pages (전체 데이터)
         function selectAllPages() {
             const totalCount = 856; // 실제로는 서버에서 전체 데이터 수
-            
+
             // 현재 페이지 체크박스도 모두 선택
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]');
             checkboxes.forEach(cb => cb.checked = true);
-            
+
             // 선택된 수를 전체로 표시
             document.getElementById('selectedCount').textContent = totalCount.toLocaleString();
-            
+
             // 버튼 상태 업데이트
             document.getElementById('btnSelectPage').classList.remove('active');
             document.getElementById('btnSelectAll').classList.add('active');
-            
+
             showToast(`전체 ${totalCount.toLocaleString()}건이 선택되었습니다.`, 'info');
         }
-        
+
         // Select all (버튼 클릭)
         function selectAll() {
             document.getElementById('checkAll').checked = true;
             showSelectAllNotice();
         }
-        
+
         // Update selected count
         function updateSelectedCount() {
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]:checked');
             document.getElementById('selectedCount').textContent = checkboxes.length;
         }
-        
+
         // Register selected orders
         function registerSelected() {
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]:checked');
@@ -625,14 +682,14 @@
                 showToast('등록할 주문을 선택해주세요.', 'warning');
                 return;
             }
-            
+
             showToast(`${checkboxes.length}건의 주문을 등록중입니다...`, 'info');
-            
+
             setTimeout(() => {
                 showToast(`${checkboxes.length}건의 주문이 등록되었습니다.`, 'success');
             }, 1500);
         }
-        
+
         // Show sample data in table
         function showSampleData() {
             const sampleData = [
@@ -642,12 +699,12 @@
                 { no: 4, shop: 'eBay', orderNo: 'EBAY-20241205004', orderDate: '2024-12-05 13:45', product: 'Korean Cosmetics Set', option: 'Set A', qty: 3, price: '$89.99', receiver: 'John Smith', status: '신규' },
                 { no: 5, shop: 'Amazon USA', orderNo: 'AMZUS-20241205005', orderDate: '2024-12-05 14:20', product: 'K-Pop Album Collection', option: 'BTS Edition', qty: 2, price: '$125.00', receiver: 'Emily Johnson', status: '신규' },
             ];
-            
+
             const tbody = document.getElementById('dataTableBody');
             const emptyState = document.getElementById('emptyState');
-            
+
             emptyState.style.display = 'none';
-            
+
             let html = '';
             sampleData.forEach(item => {
                 html += `
@@ -666,19 +723,19 @@
                     </tr>
                 `;
             });
-            
+
             tbody.innerHTML = html;
             tbody.innerHTML += `<tr id="emptyState" style="display:none"><td colspan="11"></td></tr>`;
             document.getElementById('dataCount').textContent = `총 ${sampleData.length}건`;
         }
-        
+
         // 필터바 토글
         function toggleFilterBar() {
             const filterBar = document.getElementById('filterBar');
             const apiCallBtn = document.getElementById('apiCallBtn');
-            
+
             filterBar.classList.toggle('hidden');
-            
+
             // 버튼 활성화 상태 표시
             if (filterBar.classList.contains('hidden')) {
                 apiCallBtn.classList.remove('toolbar-btn-active');
@@ -689,7 +746,7 @@
                 lucide.createIcons();
             }
         }
-        
+
         // 통관이슈
         function handleCustomsIssue() {
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]:checked');
@@ -699,7 +756,7 @@
             }
             showToast(`${checkboxes.length}건의 통관이슈 처리를 시작합니다...`, 'info');
         }
-        
+
         // 배송접수
         function handleDeliveryReceipt() {
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]:checked');
@@ -712,7 +769,7 @@
                 showToast('배송접수가 완료되었습니다.', 'success');
             }, 1500);
         }
-        
+
         // 주문 삭제
         function deleteOrders() {
             const checkboxes = document.querySelectorAll('#dataTableBody input[type="checkbox"]:checked');
@@ -726,5 +783,5 @@
         }
     </script>
 </body>
-</html>
 
+</html>

@@ -1,5 +1,5 @@
 /* ========================================
-   eXpert slim X - Main Stylesheet
+   QPEED - Main Stylesheet
    ======================================== */
 
 /* Base Styles */
@@ -25,20 +25,25 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
     animation: rotate 30s linear infinite;
 }
 
 @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Circle Decorations */
 .circle-decoration {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .circle-1 {
@@ -67,7 +72,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1213,7 +1218,7 @@ input:focus {
 
 .stat-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Quick Action Button */
@@ -1398,10 +1403,25 @@ input:focus {
     flex-direction: column;
 }
 
-.modal-sm { width: 100%; max-width: 400px; }
-.modal-md { width: 100%; max-width: 600px; }
-.modal-lg { width: 100%; max-width: 800px; }
-.modal-xl { width: 100%; max-width: 1000px; }
+.modal-sm {
+    width: 100%;
+    max-width: 400px;
+}
+
+.modal-md {
+    width: 100%;
+    max-width: 600px;
+}
+
+.modal-lg {
+    width: 100%;
+    max-width: 800px;
+}
+
+.modal-xl {
+    width: 100%;
+    max-width: 1000px;
+}
 
 .modal-header {
     padding: 12px 16px;
@@ -1656,8 +1676,8 @@ input:focus {
     padding: 0 4px;
 }
 
-.floating-select select:focus + label,
-.floating-select select.has-value + label {
+.floating-select select:focus+label,
+.floating-select select.has-value+label {
     top: 0;
     font-size: 11px;
     color: #2563eb;
@@ -1673,7 +1693,7 @@ input:focus {
     transition: transform 0.2s ease;
 }
 
-.floating-select select:focus ~ .floating-select-arrow {
+.floating-select select:focus~.floating-select-arrow {
     transform: translateY(-50%) rotate(180deg);
     color: #2563eb;
 }
@@ -1698,7 +1718,79 @@ input:focus {
     background: #d1d5db;
 }
 
-.floating-select select.has-value ~ .floating-select-clear {
+.floating-select select.has-value~.floating-select-clear {
+    display: flex;
+}
+
+/* ----------------------------------------
+   Floating Input Box
+   ---------------------------------------- */
+.floating-input {
+    position: relative;
+    min-width: 176px;
+}
+
+.floating-input input {
+    width: 100%;
+    height: 44px;
+    padding: 18px 44px 6px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+
+.floating-input input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.floating-input label {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #9ca3af;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background: white;
+    padding: 0 4px;
+}
+
+.floating-input input:focus+label,
+.floating-input input:not(:placeholder-shown)+label,
+.floating-input.active label {
+    top: 0;
+    font-size: 11px;
+    color: #2563eb;
+}
+
+.floating-input .floating-input-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.floating-input .floating-input-clear:hover {
+    background: #d1d5db;
+}
+
+.floating-input input:focus~.floating-input-clear,
+.floating-input.active .floating-input-clear {
     display: flex;
 }
 
@@ -2020,4 +2112,3 @@ input:focus {
     text-align: center;
     padding: 64px 16px;
 }
-

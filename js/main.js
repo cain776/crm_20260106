@@ -1,5 +1,5 @@
 /* ========================================
-   eXpert slim X - Main JavaScript
+   QPEED - Main JavaScript
    ======================================== */
 
 // Tailwind CSS Configuration
@@ -21,12 +21,12 @@ if (typeof tailwind !== 'undefined') {
 }
 
 // Initialize on DOM loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize Lucide Icons
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
-    
+
     // Initialize sidebar state
     initSidebarState();
 });
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.getElementById('eye-icon');
-    
+
     if (!passwordInput || !eyeIcon) return;
-    
+
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
         eyeIcon.setAttribute('data-lucide', 'eye-off');
@@ -51,7 +51,7 @@ function togglePassword() {
         passwordInput.type = 'password';
         eyeIcon.setAttribute('data-lucide', 'eye');
     }
-    
+
     // Re-initialize icons
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
@@ -70,23 +70,23 @@ function toggleSidebar() {
     const mainContent = document.querySelector('.main-content');
     const topBarBrand = document.querySelector('.top-bar-brand');
     const toggleIcon = document.getElementById('sidebar-toggle-icon');
-    
+
     if (sidebar) {
         sidebar.classList.toggle('collapsed');
     }
-    
+
     if (mainContent) {
         mainContent.classList.toggle('expanded');
     }
-    
+
     if (topBarBrand) {
         topBarBrand.classList.toggle('collapsed');
     }
-    
+
     // Save state to localStorage
     const isCollapsed = sidebar?.classList.contains('collapsed');
     localStorage.setItem('sidebarCollapsed', isCollapsed);
-    
+
     // Update toggle icon
     if (toggleIcon) {
         toggleIcon.setAttribute('data-lucide', isCollapsed ? 'panel-left-open' : 'panel-left-close');
@@ -103,12 +103,12 @@ function initSidebarState() {
     const mainContent = document.querySelector('.main-content');
     const topBarBrand = document.querySelector('.top-bar-brand');
     const toggleIcon = document.getElementById('sidebar-toggle-icon');
-    
+
     if (isCollapsed) {
         sidebar?.classList.add('collapsed');
         mainContent?.classList.add('expanded');
         topBarBrand?.classList.add('collapsed');
-        
+
         if (toggleIcon) {
             toggleIcon.setAttribute('data-lucide', 'panel-left-open');
         }
@@ -122,11 +122,11 @@ function initSidebarState() {
 function toggleSubmenu(id) {
     const submenu = document.getElementById(id);
     const arrow = document.getElementById(id + '-arrow');
-    
+
     if (!submenu) return;
-    
+
     submenu.classList.toggle('open');
-    
+
     if (arrow) {
         arrow.style.transform = submenu.classList.contains('open') ? 'rotate(180deg)' : '';
     }
@@ -141,7 +141,7 @@ function setActiveMenu(element) {
     document.querySelectorAll('.menu-item').forEach(item => {
         item.classList.remove('active');
     });
-    
+
     // Add active class to clicked element
     element.classList.add('active');
 }
@@ -173,7 +173,7 @@ function formatCurrency(amount, currency = 'USD') {
         EUR: { symbol: '€', locale: 'de-DE' },
         GBP: { symbol: '£', locale: 'en-GB' }
     };
-    
+
     const format = formats[currency] || formats.USD;
     return new Intl.NumberFormat(format.locale, {
         style: 'currency',
@@ -193,13 +193,13 @@ function showToast(message, type = 'info') {
         warning: 'bg-yellow-500',
         info: 'bg-blue-500'
     };
-    
+
     const toast = document.createElement('div');
     toast.className = `fixed bottom-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
     toast.textContent = message;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
         toast.classList.add('animate-fade-out');
         setTimeout(() => toast.remove(), 300);
@@ -226,7 +226,7 @@ function logout() {
  */
 function toggleFullscreen() {
     const icon = document.getElementById('fullscreenIcon');
-    
+
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().then(() => {
             if (icon) {
@@ -247,7 +247,7 @@ function toggleFullscreen() {
 }
 
 // Listen for fullscreen change
-document.addEventListener('fullscreenchange', function() {
+document.addEventListener('fullscreenchange', function () {
     const icon = document.getElementById('fullscreenIcon');
     if (icon) {
         icon.setAttribute('data-lucide', document.fullscreenElement ? 'minimize' : 'maximize');
@@ -265,10 +265,10 @@ document.addEventListener('fullscreenchange', function() {
 function toggleLanguageMenu() {
     const dropdown = document.getElementById('languageDropdown');
     const userDropdown = document.getElementById('userDropdown');
-    
+
     // Close user dropdown if open
     if (userDropdown) userDropdown.classList.remove('show');
-    
+
     // Toggle language dropdown
     if (dropdown) {
         dropdown.classList.toggle('show');
@@ -284,12 +284,12 @@ function selectLanguage(langCode, displayCode) {
     const langBtn = document.querySelector('#langBtn .lang-code');
     const dropdown = document.getElementById('languageDropdown');
     const options = document.querySelectorAll('.language-option');
-    
+
     // Update button text
     if (langBtn) {
         langBtn.textContent = displayCode;
     }
-    
+
     // Update active state
     options.forEach(option => {
         option.classList.remove('active');
@@ -297,15 +297,15 @@ function selectLanguage(langCode, displayCode) {
             option.classList.add('active');
         }
     });
-    
+
     // Close dropdown
     if (dropdown) {
         dropdown.classList.remove('show');
     }
-    
+
     // Save to localStorage
     localStorage.setItem('language', langCode);
-    
+
     showToast(`언어가 ${displayCode}로 변경되었습니다.`, 'info');
 }
 
@@ -319,10 +319,10 @@ function selectLanguage(langCode, displayCode) {
 function toggleUserMenu() {
     const dropdown = document.getElementById('userDropdown');
     const langDropdown = document.getElementById('languageDropdown');
-    
+
     // Close language dropdown if open
     if (langDropdown) langDropdown.classList.remove('show');
-    
+
     // Toggle user dropdown
     if (dropdown) {
         dropdown.classList.toggle('show');
@@ -346,17 +346,17 @@ function goToSettings() {
 }
 
 // Close dropdowns when clicking outside
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const langDropdown = document.getElementById('languageDropdown');
     const userDropdown = document.getElementById('userDropdown');
     const langBtn = document.getElementById('langBtn');
     const userBtn = document.getElementById('userBtn');
-    
+
     // Close language dropdown
     if (langDropdown && !langBtn?.contains(e.target) && !langDropdown.contains(e.target)) {
         langDropdown.classList.remove('show');
     }
-    
+
     // Close user dropdown
     if (userDropdown && !userBtn?.contains(e.target) && !userDropdown.contains(e.target)) {
         userDropdown.classList.remove('show');

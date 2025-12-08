@@ -1,5 +1,5 @@
 /* ========================================
-   eXpert slim X - Common Components
+   QPEED - Common Components
    ======================================== */
 
 /**
@@ -25,7 +25,7 @@ function createFloatingSelect(options) {
         onChange = null
     } = options;
 
-    const optionsHtml = items.map(item => 
+    const optionsHtml = items.map(item =>
         `<option value="${item.value}">${item.text}</option>`
     ).join('');
 
@@ -57,11 +57,11 @@ function handleFloatingSelectChange(select, callback) {
     } else {
         select.classList.remove('has-value');
     }
-    
+
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
-    
+
     if (typeof callback === 'function') {
         callback(select.value);
     }
@@ -75,7 +75,7 @@ function clearSelect(selectId) {
     if (select) {
         select.value = '';
         select.classList.remove('has-value');
-        
+
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
@@ -230,7 +230,7 @@ function handleFileInputChange(input) {
 function resetFileInput(inputId) {
     const input = document.getElementById(inputId);
     const fileNameSpan = document.getElementById(inputId + 'FileName');
-    
+
     if (input) {
         input.value = '';
     }
@@ -329,7 +329,7 @@ function createSearchButton(onClick = 'search()') {
    Initialize Components
    ======================================== */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initFloatingSelects();
 });
 

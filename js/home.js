@@ -1,9 +1,9 @@
 /* ========================================
-   eXpert slim X - Home Page JavaScript
+   QPEED - Home Page JavaScript
    ======================================== */
 
 // Initialize home page when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initCharts();
 });
 
@@ -25,9 +25,9 @@ function initCharts() {
 function initWeeklyChart() {
     const canvas = document.getElementById('weeklyChart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
-    
+
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -53,7 +53,7 @@ function initWeeklyChart() {
                     cornerRadius: 8,
                     displayColors: false,
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             return `주문: ${context.raw}건`;
                         }
                     }
@@ -63,14 +63,14 @@ function initWeeklyChart() {
                 y: {
                     beginAtZero: true,
                     grid: { color: '#f1f5f9' },
-                    ticks: { 
+                    ticks: {
                         color: '#94a3b8',
                         font: { size: 12 }
                     }
                 },
                 x: {
                     grid: { display: false },
-                    ticks: { 
+                    ticks: {
                         color: '#94a3b8',
                         font: { size: 12 }
                     }
@@ -86,9 +86,9 @@ function initWeeklyChart() {
 function initCountryChart() {
     const canvas = document.getElementById('countryChart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
-    
+
     new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -120,7 +120,7 @@ function initCountryChart() {
                     padding: 12,
                     cornerRadius: 8,
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             return `${context.label}: ${context.raw}%`;
                         }
                     }

@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eXpert slim X - HOME</title>
-    
+    <title>QPEED - HOME</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Pretendard Font -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="font-pretendard bg-gray-50">
     <!-- Top Bar -->
     <header class="top-bar">
         <!-- 로고 영역 (사이드바 너비와 동일) -->
         <div class="top-bar-brand"></div>
-        
+
         <!-- 메인 영역 (컨텐츠와 정렬) -->
         <div class="top-bar-main">
             <div class="top-bar-left">
@@ -35,14 +38,14 @@
                 <div class="top-bar-divider"></div>
                 <span class="top-bar-title">HOME</span>
             </div>
-            
+
             <div class="top-bar-center">
                 <div class="top-bar-search">
                     <i data-lucide="search" class="search-icon w-4 h-4"></i>
                     <input type="text" placeholder="Search...">
                 </div>
             </div>
-            
+
             <div class="top-bar-right">
                 <button class="top-bar-icon" title="알림">
                     <i data-lucide="bell" class="w-5 h-5"></i>
@@ -111,143 +114,190 @@
             </div>
         </div>
     </header>
-    
+
     <div class="flex">
         <!-- Sidebar -->
         <aside class="sidebar">
             <!-- Logo -->
             <a href="index.html" class="sidebar-logo">
-                <span class="logo-full">eXpert slim X</span>
-                <span class="logo-short">SL</span>
+                <span class="logo-full">QPEED</span>
+                <span class="logo-short">QP</span>
             </a>
-            
+
             <!-- Navigation -->
             <nav class="flex-1 overflow-y-auto py-4">
                 <ul class="space-y-1 px-3">
                     <!-- HOME -->
                     <li>
-                        <a href="index.html" class="menu-item active relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium" title="HOME">
+                        <a href="index.html"
+                            class="menu-item active relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium"
+                            title="HOME">
                             <i data-lucide="home" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">HOME</span>
                         </a>
                     </li>
-                    
+
                     <!-- 주문접수 -->
                     <li>
-                        <button onclick="toggleSubmenu('order-register')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문접수">
+                        <button onclick="toggleSubmenu('order-register')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="주문접수">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="plus-circle" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">주문접수</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-register-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="order-register-arrow"></i>
                         </button>
                         <ul id="order-register" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="pages/bulk-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a></li>
-                            <li><a href="pages/auto-registration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동등록(API)</a></li>
-                            <li><a href="pages/auto-collection-settings.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록 설정</a></li>
+                            <li><a href="pages/bulk-registration.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">대량등록(excel)</a>
+                            </li>
+                            <li><a href="pages/auto-registration.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동등록(API)</a>
+                            </li>
+                            <li><a href="pages/auto-collection-settings.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">자동 등록
+                                    설정</a></li>
                         </ul>
                     </li>
-                    
+
                     <!-- 주문관리 -->
                     <li>
-                        <button onclick="toggleSubmenu('order-manage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="주문관리">
+                        <button onclick="toggleSubmenu('order-manage')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="주문관리">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="clipboard-list" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">주문관리</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="order-manage-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="order-manage-arrow"></i>
                         </button>
                         <ul id="order-manage" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="pages/order-management.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a></li>
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관 관리</a></li>
+                            <li><a href="pages/order-management.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">주문정보관리</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">삭제/보류/보관
+                                    관리</a></li>
                         </ul>
                     </li>
-                    
+
                     <!-- 발송내역 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="발송내역">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="발송내역">
                             <i data-lucide="truck" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">발송내역</span>
                         </a>
                     </li>
-                    
+
                     <!-- 상품관리 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="상품관리">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="상품관리">
                             <i data-lucide="package" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">상품관리</span>
                         </a>
                     </li>
-                    
+
                     <!-- 창고관리 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="창고관리">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="창고관리">
                             <i data-lucide="warehouse" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">창고관리</span>
                         </a>
                     </li>
-                    
+
                     <!-- 재배송/회수 -->
                     <li>
-                        <a href="#" class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="재배송/회수">
+                        <a href="#"
+                            class="menu-item relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="재배송/회수">
                             <i data-lucide="refresh-cw" class="w-5 h-5 flex-shrink-0"></i>
                             <span class="menu-text">재배송/회수</span>
                         </a>
                     </li>
-                    
+
                     <!-- 공지/문의 관리 -->
                     <li>
-                        <button onclick="toggleSubmenu('notice')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="공지/문의 관리">
+                        <button onclick="toggleSubmenu('notice')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="공지/문의 관리">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="message-square" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">공지/문의 관리</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="notice-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="notice-arrow"></i>
                         </button>
                         <ul id="notice" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="pages/notice.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a></li>
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a></li>
+                            <li><a href="pages/notice.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">공지사항</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">문의관리</a>
+                            </li>
                         </ul>
                     </li>
-                    
+
                     <!-- 정산관리 -->
                     <li>
-                        <button onclick="toggleSubmenu('settlement')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="정산관리">
+                        <button onclick="toggleSubmenu('settlement')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="정산관리">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="calculator" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">정산관리</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="settlement-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="settlement-arrow"></i>
                         </button>
                         <ul id="settlement" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a></li>
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a></li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">해외배송소포수령증</a>
+                            </li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">정산관리</a>
+                            </li>
                         </ul>
                     </li>
-                    
+
                     <!-- My Page -->
                     <li>
-                        <button onclick="toggleSubmenu('mypage')" class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700" title="My Page">
+                        <button onclick="toggleSubmenu('mypage')"
+                            class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                            title="My Page">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="user" class="w-5 h-5 flex-shrink-0"></i>
                                 <span class="menu-text">My Page</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow" id="mypage-arrow"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
+                                id="mypage-arrow"></i>
                         </button>
                         <ul id="mypage" class="submenu pl-11 space-y-1 mt-1">
-                            <li><a href="#" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a></li>
-                            <li><a href="pages/api-integration.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a></li>
+                            <li><a href="#"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">내정보</a>
+                            </li>
+                            <li><a href="pages/api-integration.html"
+                                    class="block py-2 px-3 text-sm text-gray-600 hover:text-blue-600 rounded">API 연동</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
             </nav>
-            
+
             <!-- Footer -->
             <div class="sidebar-footer p-4 border-t border-gray-100 text-xs text-gray-400">
-                <span>© SWKIM eXpert slim X</span>
+                <span>© SWKIM QPEED</span>
             </div>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content flex-1">
             <!-- Page Content -->
@@ -255,9 +305,9 @@
                 <!-- Page Title -->
                 <div class="mb-6">
                     <h1 class="text-2xl font-bold text-gray-900">HOME</h1>
-                    <p class="text-gray-500 mt-1">eXpert slim X - 전체 주문 및 배송 현황을 한눈에 확인하세요</p>
+                    <p class="text-gray-500 mt-1">QPEED - 전체 주문 및 배송 현황을 한눈에 확인하세요</p>
                 </div>
-                
+
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
                     <!-- 신규 주문 -->
@@ -273,7 +323,7 @@
                             <span class="text-gray-400">vs 어제</span>
                         </div>
                     </div>
-                    
+
                     <!-- 배송중 -->
                     <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
                         <div class="flex items-center justify-between mb-3">
@@ -283,7 +333,7 @@
                         <div class="text-3xl font-bold text-gray-900">342</div>
                         <div class="text-sm text-gray-400 mt-2">11개국 배송중</div>
                     </div>
-                    
+
                     <!-- 배송 완료 -->
                     <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
                         <div class="flex items-center justify-between mb-3">
@@ -293,7 +343,7 @@
                         <div class="text-3xl font-bold text-gray-900">1,847</div>
                         <div class="text-sm text-gray-400 mt-2">이번 달 기준</div>
                     </div>
-                    
+
                     <!-- 반품/교환 -->
                     <div class="stat-card bg-white rounded-xl p-5 border border-gray-100">
                         <div class="flex items-center justify-between mb-3">
@@ -303,7 +353,7 @@
                         <div class="text-3xl font-bold text-gray-900">23</div>
                         <div class="text-sm text-gray-400 mt-2">5건 처리</div>
                     </div>
-                    
+
                     <!-- 이번 달 매출 -->
                     <div class="stat-card bg-blue-600 rounded-xl p-5 text-white">
                         <div class="flex items-center justify-between mb-3">
@@ -325,41 +375,46 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Quick Actions -->
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                    <button
+                        class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
                         <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
                             <i data-lucide="clipboard-list" class="w-5 h-5 text-blue-600"></i>
                         </div>
                         <span class="text-sm font-medium text-gray-700">주문 관리</span>
                     </button>
-                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                    <button
+                        class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
                         <div class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center">
                             <i data-lucide="truck" class="w-5 h-5 text-yellow-600"></i>
                         </div>
                         <span class="text-sm font-medium text-gray-700">배송 현황</span>
                     </button>
-                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                    <button
+                        class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
                         <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
                             <i data-lucide="package" class="w-5 h-5 text-green-600"></i>
                         </div>
                         <span class="text-sm font-medium text-gray-700">재고 관리</span>
                     </button>
-                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                    <button
+                        class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
                         <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center">
                             <i data-lucide="users" class="w-5 h-5 text-purple-600"></i>
                         </div>
                         <span class="text-sm font-medium text-gray-700">고객 관리</span>
                     </button>
-                    <button class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
+                    <button
+                        class="quick-action bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-3 text-left">
                         <div class="w-10 h-10 bg-pink-50 rounded-lg flex items-center justify-center">
                             <i data-lucide="bar-chart-2" class="w-5 h-5 text-pink-600"></i>
                         </div>
                         <span class="text-sm font-medium text-gray-700">매출 리포트</span>
                     </button>
                 </div>
-                
+
                 <!-- Charts Row -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                     <!-- Weekly Orders Chart -->
@@ -372,7 +427,7 @@
                             <canvas id="weeklyChart"></canvas>
                         </div>
                     </div>
-                    
+
                     <!-- Country Distribution -->
                     <div class="bg-white rounded-xl p-6 border border-gray-100">
                         <div class="flex items-center justify-between mb-6">
@@ -428,7 +483,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Bottom Row -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Recent Orders -->
@@ -443,7 +498,9 @@
                         <div class="space-y-3">
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600">US</div>
+                                    <div
+                                        class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600">
+                                        US</div>
                                     <div>
                                         <div class="font-medium text-sm text-gray-900">#ORD-2024120401</div>
                                         <div class="text-xs text-gray-500">John Smith · $125.00</div>
@@ -453,7 +510,9 @@
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-xs font-bold text-red-600">JP</div>
+                                    <div
+                                        class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-xs font-bold text-red-600">
+                                        JP</div>
                                     <div>
                                         <div class="font-medium text-sm text-gray-900">#ORD-2024120402</div>
                                         <div class="text-xs text-gray-500">田中太郎 · ¥16,800</div>
@@ -463,7 +522,9 @@
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-xs font-bold text-yellow-700">DE</div>
+                                    <div
+                                        class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-xs font-bold text-yellow-700">
+                                        DE</div>
                                     <div>
                                         <div class="font-medium text-sm text-gray-900">#ORD-2024120403</div>
                                         <div class="text-xs text-gray-500">Hans Mueller · €89.00</div>
@@ -473,7 +534,9 @@
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600">UK</div>
+                                    <div
+                                        class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-xs font-bold text-purple-600">
+                                        UK</div>
                                     <div>
                                         <div class="font-medium text-sm text-gray-900">#ORD-2024120404</div>
                                         <div class="text-xs text-gray-500">James Wilson · £57.50</div>
@@ -483,7 +546,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Marketplace Status -->
                     <div class="bg-white rounded-xl p-6 border border-gray-100">
                         <div class="flex items-center justify-between mb-4">
@@ -557,9 +620,10 @@
             </div>
         </main>
     </div>
-    
+
     <!-- Custom Scripts -->
     <script src="js/main.js"></script>
     <script src="js/home.js"></script>
 </body>
+
 </html>
