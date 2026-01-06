@@ -452,13 +452,54 @@
                 <button class="top-bar-icon" title="설정">
                     <i data-lucide="settings" class="w-5 h-5"></i>
                 </button>
+                <button class="top-bar-icon" title="도움말">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                </button>
+                <div class="top-bar-divider"></div>
+                <button class="top-bar-icon" onclick="toggleFullscreen()" title="전체화면" id="fullscreenBtn">
+                    <i data-lucide="maximize" class="w-5 h-5" id="fullscreenIcon"></i>
+                </button>
+                <div class="language-select">
+                    <button class="top-bar-icon" onclick="toggleLanguageMenu()" title="언어선택" id="langBtn">
+                        <span class="lang-code">KO</span>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option active" onclick="selectLanguage('ko', 'KO')">
+                            <span>🇰🇷</span> 한국어
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('en', 'EN')">
+                            <span>🇺🇸</span> English
+                        </button>
+                        <button class="language-option" onclick="selectLanguage('vi', 'VN')">
+                            <span>🇻🇳</span> Tiếng Việt
+                        </button>
+                    </div>
+                </div>
                 <div class="top-bar-divider"></div>
                 <div class="user-menu">
-                    <button class="user-info" id="userBtn">
+                    <button class="user-info" onclick="toggleUserMenu()" id="userBtn">
                         <div class="top-bar-avatar">A</div>
                         <span class="user-name">Admin</span>
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header">
+                            <div class="top-bar-avatar">A</div>
+                            <div class="user-dropdown-info">
+                                <span class="user-dropdown-name">Admin</span>
+                                <span class="user-dropdown-email">admin@bnviit.com</span>
+                            </div>
+                        </div>
+                        <div class="user-dropdown-divider"></div>
+                        <button class="user-dropdown-item">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            마이페이지
+                        </button>
+                        <button class="user-dropdown-item">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            로그아웃
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
