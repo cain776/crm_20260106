@@ -113,6 +113,9 @@ function initSidebarState() {
             toggleIcon.setAttribute('data-lucide', 'panel-left-open');
         }
     }
+
+    // Restore submenu states
+    restoreSubmenuStates();
 }
 
 /**
@@ -130,6 +133,72 @@ function toggleSubmenu(id) {
     if (arrow) {
         arrow.style.transform = submenu.classList.contains('open') ? 'rotate(180deg)' : '';
     }
+
+    // Save submenu state to localStorage
+    saveSubmenuStates();
+}
+
+/**
+ * Save all submenu states to localStorage
+ */
+function saveSubmenuStates() {
+    const submenus = document.querySelectorAll('.submenu');
+    const states = {};
+
+    submenus.forEach(submenu => {
+        if (submenu.id) {
+            states[submenu.id] = submenu.classList.contains('open') || submenu.classList.contains('show');
+        }
+    });
+
+    localStorage.setItem('submenuStates', JSON.stringify(states));
+}
+
+/**
+ * Restore submenu states from localStorage
+ */
+function restoreSubmenuStates() {
+    const savedStates = localStorage.getItem('submenuStates');
+    if (!savedStates) return;
+
+    try {
+        const states = JSON.parse(savedStates);
+
+        Object.keys(states).forEach(id => {
+            const submenu = document.getElementById(id);
+            const arrow = document.getElementById(id + '-arrow');
+
+            if (submenu && states[id]) {
+                submenu.classList.add('open');
+                submenu.classList.add('show');
+                if (arrow) {
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            }
+        });
+    } catch (e) {
+        console.error('Error restoring submenu states:', e);
+    }
+}
+
+/**
+ * Close all submenus (called when clicking logo)
+ */
+function closeAllSubmenus() {
+    const submenus = document.querySelectorAll('.submenu');
+
+    submenus.forEach(submenu => {
+        submenu.classList.remove('open');
+        submenu.classList.remove('show');
+
+        const arrow = document.getElementById(submenu.id + '-arrow');
+        if (arrow) {
+            arrow.style.transform = '';
+        }
+    });
+
+    // Clear saved states
+    localStorage.removeItem('submenuStates');
 }
 
 /**
@@ -207,13 +276,99 @@ function showToast(message, type = 'info') {
 }
 
 /**
- * Logout function
+ * Logout function - 커스텀 모달로 확인
  */
 function logout() {
-    if (confirm('로그아웃 하시겠습니까?')) {
-        // Check if we're in pages folder
-        const isInPages = window.location.pathname.includes('/pages/');
-        window.location.href = isInPages ? '../login.html' : 'login.html';
+    showConfirmModal(
+        '로그아웃',
+        '정말 로그아웃 하시겠습니까?',
+        () => {
+            const isInPages = window.location.pathname.includes('/pages/');
+            window.location.href = isInPages ? '../login.html' : 'login.html';
+        }
+    );
+}
+
+/**
+ * 커스텀 확인 모달 표시
+ * @param {string} title - 모달 제목
+ * @param {string} message - 확인 메시지
+ * @param {function} onConfirm - 확인 버튼 클릭 시 콜백
+ */
+function showConfirmModal(title, message, onConfirm) {
+    // 기존 모달 제거
+    const existingModal = document.getElementById('confirm-modal');
+    if (existingModal) existingModal.remove();
+
+    // 모달 HTML 생성
+    const modalHTML = `
+        <div id="confirm-modal" class="confirm-modal-overlay">
+            <div class="confirm-modal">
+                <div class="confirm-modal-header">
+                    <i data-lucide="alert-circle" class="confirm-modal-icon"></i>
+                    <h3 class="confirm-modal-title">${title}</h3>
+                </div>
+                <p class="confirm-modal-message">${message}</p>
+                <div class="confirm-modal-actions">
+                    <button class="confirm-modal-btn confirm-modal-btn-cancel" onclick="closeConfirmModal()">
+                        취소
+                    </button>
+                    <button class="confirm-modal-btn confirm-modal-btn-confirm" id="confirm-modal-ok">
+                        확인
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 모달을 body에 추가
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // 아이콘 초기화
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // 확인 버튼 이벤트
+    document.getElementById('confirm-modal-ok').addEventListener('click', () => {
+        closeConfirmModal();
+        if (onConfirm) onConfirm();
+    });
+
+    // ESC 키로 닫기
+    document.addEventListener('keydown', handleModalEscape);
+
+    // 배경 클릭으로 닫기
+    document.getElementById('confirm-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'confirm-modal') {
+            closeConfirmModal();
+        }
+    });
+
+    // 애니메이션을 위해 약간 지연 후 표시
+    setTimeout(() => {
+        document.getElementById('confirm-modal').classList.add('show');
+    }, 10);
+}
+
+/**
+ * 모달 닫기
+ */
+function closeConfirmModal() {
+    const modal = document.getElementById('confirm-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 200);
+    }
+    document.removeEventListener('keydown', handleModalEscape);
+}
+
+/**
+ * ESC 키 핸들러
+ */
+function handleModalEscape(e) {
+    if (e.key === 'Escape') {
+        closeConfirmModal();
     }
 }
 
