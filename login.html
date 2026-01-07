@@ -20,12 +20,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="font-pretendard">
-    <div class="min-h-screen flex">
+<body class="font-pretendard overflow-hidden">
+    <div class="h-screen flex w-full">
         <!-- Left Side - Video Background -->
         <!-- Left Side - Video Background -->
         <div
-            class="login-left hidden lg:flex lg:w-2/3 flex-col justify-between p-16 text-white relative overflow-hidden">
+            class="login-left hidden lg:flex lg:w-2/3 flex-col justify-between p-10 xl:p-12 text-white relative overflow-hidden h-full">
             <!-- Video Background -->
             <video autoplay muted playsinline class="absolute inset-0 w-full h-full object-cover z-0"
                 style="transform: rotate(-90deg) scale(1.8);">
@@ -45,17 +45,17 @@
             </div>
 
             <!-- Main Content -->
-            <div class="relative z-10 mb-20">
-                <h1 class="text-6xl font-bold leading-tight mb-8 tracking-tight">
+            <div class="relative z-10 mb-8 mt-auto">
+                <h1 class="text-5xl xl:text-5xl font-bold leading-tight mb-6 tracking-tight">
                     안과 진료의 모든 것을<br>한눈에
                 </h1>
-                <p class="text-white/90 text-lg font-light mb-10 leading-relaxed">
+                <p class="text-white/90 text-lg font-light mb-8 leading-relaxed">
                     환자 예약부터 진료, 수술, 경영 분석까지<br>
                     <span class="font-semibold text-white">안과 전문 클라우드 시스템</span>으로 통합 관리하세요.
                 </p>
 
                 <!-- CTA Buttons -->
-                <div class="flex items-center gap-5 mb-16">
+                <div class="flex items-center gap-4 mb-10">
                     <a href="#"
                         class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition shadow-lg hover:shadow-blue-500/30 flex items-center gap-2">
                         문의하기
@@ -70,71 +70,71 @@
             </div>
 
             <!-- Features (Restored & Added) -->
-            <div class="space-y-6 relative z-10 mb-auto">
-                <div class="flex items-center gap-5 group">
+            <div class="space-y-3.5 relative z-10 mb-0">
+                <div class="flex items-center gap-4 group">
                     <div
-                        class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
-                        <i data-lucide="users" class="w-6 h-6 text-blue-100"></i>
+                        class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
+                        <i data-lucide="users" class="w-5 h-5 text-blue-100"></i>
                     </div>
                     <div>
-                        <div class="font-bold text-lg mb-0.5 text-white/95">환자 360° 통합 관리</div>
-                        <div class="text-blue-100/70 text-sm font-light tracking-wide">진료 이력, 검사 결과, 수술 기록을 한눈에</div>
+                        <div class="font-bold text-base mb-0.5 text-white/95">환자 360° 통합 관리</div>
+                        <div class="text-blue-100/70 text-xs font-light tracking-wide">진료 이력, 검사 결과, 수술 기록을 한눈에</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-5 group">
+                <div class="flex items-center gap-4 group">
                     <div
-                        class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
-                        <i data-lucide="calendar" class="w-6 h-6 text-blue-100"></i>
+                        class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
+                        <i data-lucide="calendar" class="w-5 h-5 text-blue-100"></i>
                     </div>
                     <div>
-                        <div class="font-bold text-lg mb-0.5 text-white/95">스마트 예약 시스템</div>
-                        <div class="text-blue-100/70 text-sm font-light tracking-wide">검사/진료/수술 예약 자동화 및 노쇼 관리</div>
+                        <div class="font-bold text-base mb-0.5 text-white/95">스마트 예약 시스템</div>
+                        <div class="text-blue-100/70 text-xs font-light tracking-wide">검사/진료/수술 예약 자동화 및 노쇼 관리</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-5 group">
+                <div class="flex items-center gap-4 group">
                     <div
-                        class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
-                        <i data-lucide="package" class="w-6 h-6 text-blue-100"></i>
+                        class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
+                        <i data-lucide="package" class="w-5 h-5 text-blue-100"></i>
                     </div>
                     <div>
-                        <div class="font-bold text-lg mb-0.5 text-white/95">시술 연동 재고 관리</div>
-                        <div class="text-blue-100/70 text-sm font-light tracking-wide">처방/수술 시 소모품 자동 차감 및 재고 알림</div>
+                        <div class="font-bold text-base mb-0.5 text-white/95">시술 연동 재고 관리</div>
+                        <div class="text-blue-100/70 text-xs font-light tracking-wide">처방/수술 시 소모품 자동 차감 및 재고 알림</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-5 group">
+                <div class="flex items-center gap-4 group">
                     <div
-                        class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
-                        <i data-lucide="message-circle" class="w-6 h-6 text-blue-100"></i>
+                        class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
+                        <i data-lucide="message-circle" class="w-5 h-5 text-blue-100"></i>
                     </div>
                     <div>
-                        <div class="font-bold text-lg mb-0.5 text-white/95">통합 채널 케어</div>
-                        <div class="text-blue-100/70 text-sm font-light tracking-wide">카카오톡, 문자 등 다양한 채널로 환자 맞춤 소통</div>
+                        <div class="font-bold text-base mb-0.5 text-white/95">통합 채널 케어</div>
+                        <div class="text-blue-100/70 text-xs font-light tracking-wide">카카오톡, 문자 등 다양한 채널로 환자 맞춤 소통</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-5 group">
+                <div class="flex items-center gap-4 group">
                     <div
-                        class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
-                        <i data-lucide="heart" class="w-6 h-6 text-blue-100"></i>
+                        class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
+                        <i data-lucide="heart" class="w-5 h-5 text-blue-100"></i>
                     </div>
                     <div>
-                        <div class="font-bold text-lg mb-0.5 text-white/95">소개환자 추적 관리</div>
-                        <div class="text-blue-100/70 text-sm font-light tracking-wide">소개인별 실적 분석 및 VIP 고객 케어</div>
+                        <div class="font-bold text-base mb-0.5 text-white/95">소개환자 추적 관리</div>
+                        <div class="text-blue-100/70 text-xs font-light tracking-wide">소개인별 실적 분석 및 VIP 고객 케어</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-5 group">
+                <div class="flex items-center gap-4 group">
                     <div
-                        class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
-                        <i data-lucide="bar-chart-2" class="w-6 h-6 text-blue-100"></i>
+                        class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 border border-white/10 group-hover:scale-110 shadow-lg shadow-black/5">
+                        <i data-lucide="bar-chart-2" class="w-5 h-5 text-blue-100"></i>
                     </div>
                     <div>
-                        <div class="font-bold text-lg mb-0.5 text-white/95">경영 데이터 인사이트</div>
-                        <div class="text-blue-100/70 text-sm font-light tracking-wide">의사별 실적, 수술 통계, 매출 분석 대시보드</div>
+                        <div class="font-bold text-base mb-0.5 text-white/95">경영 데이터 인사이트</div>
+                        <div class="text-blue-100/70 text-xs font-light tracking-wide">의사별 실적, 수술 통계, 매출 분석 대시보드</div>
                     </div>
                 </div>
             </div>
 
             <!-- Footer -->
-            <div class="text-white/60 text-sm relative z-10">
+            <div class="text-white/60 text-xs relative z-10 mt-8">
                 © 2026 B&VIIT Group. All rights reserved.
             </div>
         </div>
