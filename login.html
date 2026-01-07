@@ -498,10 +498,10 @@
 
                         <div class="agreement-item">
                             <label>
-                                <input type="checkbox" class="agreement-checkbox" id="agreeShipping">
-                                <span>국제화물운송약관 <span class="required-badge">(필수)</span></span>
+                                <input type="checkbox" class="agreement-checkbox" id="agreeService">
+                                <span>서비스 이용약관 <span class="required-badge">(필수)</span></span>
                             </label>
-                            <button type="button" class="view-terms" onclick="viewTerms('shipping')">
+                            <button type="button" class="view-terms" onclick="viewTerms('service')">
                                 약관보기 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </button>
                         </div>
@@ -667,8 +667,8 @@
         function viewTerms(type) {
             if (type === 'privacy') {
                 alert('개인정보 수집 및 이용 동의 약관 내용');
-            } else if (type === 'shipping') {
-                alert('국제화물운송약관 내용');
+            } else if (type === 'service') {
+                alert('서비스 이용약관 내용');
             }
         }
 
@@ -682,7 +682,7 @@
             const emailDomain = document.getElementById('emailDomain').value;
             const contact = document.getElementById('contact').value;
             const agreePrivacy = document.getElementById('agreePrivacy').checked;
-            const agreeShipping = document.getElementById('agreeShipping').checked;
+            const agreeService = document.getElementById('agreeService').checked;
 
             if (!userId || !password || !passwordConfirm || !sellerName || !email || !emailDomain || !contact) {
                 alert('필수 항목을 모두 입력해주세요.');
@@ -694,7 +694,7 @@
                 return;
             }
 
-            if (!agreePrivacy || !agreeShipping) {
+            if (!agreePrivacy || !agreeService) {
                 alert('필수 약관에 모두 동의해주세요.');
                 return;
             }
