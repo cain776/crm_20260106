@@ -1,5 +1,5 @@
 /* ========================================
-   QPEED - Common Components
+   EyeChartPro - Common Components
    ======================================== */
 
 /**

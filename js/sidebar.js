@@ -89,6 +89,19 @@ const menuData = [
         badge: '3'
     },
     {
+        id: 'marketing',
+        label: '마케팅',
+        icon: 'trending-up',
+        type: 'submenu',
+        items: [
+            { label: '마케팅 대시보드', href: 'dashboard-marketing.html' },
+            { label: '채널 상세', href: 'marketing-channel.html' },
+            { label: '바이럴', href: 'marketing-viral.html' },
+            { label: '해외 마케팅', href: 'marketing-global.html' },
+            { label: '고객 유입유형', href: 'marketing-customer.html' }
+        ]
+    },
+    {
         id: 'analytics',
         label: '대시보드 & 분석',
         icon: 'bar-chart-2',
@@ -96,6 +109,16 @@ const menuData = [
         items: [
             { label: '전체 수술실적', href: 'dashboard-surgery.html' },
             { label: '원장단 수술실적', href: 'dashboard-doctor.html' }
+        ]
+    },
+    {
+        id: 'operations',
+        label: '운영 관리',
+        icon: 'shield',
+        type: 'submenu',
+        items: [
+            { label: '계정 관리', href: 'account-management.html' },
+            { label: '구독/결제', href: 'subscription.html' }
         ]
     },
     {
@@ -212,7 +235,9 @@ function createMenuItem(item) {
         const hasActivePage = item.items.some(subItem => isActivePage(subItem.href));
         const savedStates = JSON.parse(localStorage.getItem('submenuStates') || '{}');
         const isOpen = savedStates[item.id] || hasActivePage;
-        const openClass = isOpen ? 'open show' : '';
+        // open과 show 클래스를 개별적으로 관리하여 토글 시 일관성 보장
+        const openClass = isOpen ? 'open' : '';
+        const showClass = isOpen ? 'show' : '';
         const arrowRotate = isOpen ? 'style="transform: rotate(180deg)"' : '';
 
         const subItemsHtml = item.items.map(subItem => {
@@ -232,7 +257,7 @@ function createMenuItem(item) {
         return `
             <li>
                 <button onclick="toggleSubmenu('${item.id}')"
-                    class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700"
+                    class="menu-item relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium"
                     title="${item.label}">
                     <div class="flex items-center gap-3">
                         <i data-lucide="${item.icon}" class="w-5 h-5 flex-shrink-0"></i>
@@ -241,7 +266,7 @@ function createMenuItem(item) {
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform menu-arrow"
                         id="${item.id}-arrow" ${arrowRotate}></i>
                 </button>
-                <ul id="${item.id}" class="submenu pl-11 space-y-1 mt-1 ${openClass}">
+                <ul id="${item.id}" class="submenu pl-11 space-y-1 mt-1 ${openClass} ${showClass}">
                     ${subItemsHtml}
                 </ul>
             </li>
@@ -258,8 +283,12 @@ function createSidebarHTML() {
     const basePath = getBasePath();
     const menuItemsHtml = menuData.map(item => createMenuItem(item)).join('');
 
+    // localStorage에서 사이드바 접힘 상태 확인
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    const collapsedClass = isCollapsed ? 'collapsed' : '';
+
     return `
-        <aside class="sidebar">
+        <aside class="sidebar ${collapsedClass}">
             <!-- Logo -->
             <a href="${basePath}index.html" class="sidebar-logo" onclick="closeAllSubmenus()">
                 <span class="logo-full">👁️ EyeChartPro</span>
@@ -344,4 +373,6 @@ function restoreSubmenuStatesOnLoad() {
 // DOM 로드 시 자동 렌더링
 document.addEventListener('DOMContentLoaded', function () {
     renderSidebar();
+    // restoreSubmenuStatesOnLoad()는 main.js의 restoreSubmenuStates()와 충돌하므로 제거
+    // 상태 복원은 createMenuItem()에서 이미 처리됨
 });

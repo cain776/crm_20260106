@@ -14,7 +14,14 @@ function getPageTitle() {
         'index.html': 'HOME',
         'dashboard-surgery.html': '전체 수술실적',
         'dashboard-doctor.html': '원장단 수술실적',
-        'channel-care.html': '채널 케어'
+        'dashboard-marketing.html': '마케팅 대시보드',
+        'marketing-channel.html': '채널 상세',
+        'marketing-viral.html': '바이럴',
+        'marketing-global.html': '해외 마케팅',
+        'marketing-customer.html': '고객 유입유형',
+        'channel-care.html': '채널 케어',
+        'account-management.html': '계정 관리',
+        'subscription.html': '구독/결제'
     };
 
     return titleMap[filename] || 'EyeChartPro';
@@ -26,16 +33,21 @@ function getPageTitle() {
 function createTopBarHTML() {
     const pageTitle = getPageTitle();
 
+    // localStorage에서 사이드바 접힘 상태 확인
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    const collapsedClass = isCollapsed ? 'collapsed' : '';
+    const toggleIcon = isCollapsed ? 'panel-left-open' : 'panel-left-close';
+
     return `
     <header class="top-bar">
         <!-- 로고 영역 (사이드바 너비와 동일) -->
-        <div class="top-bar-brand"></div>
+        <div class="top-bar-brand ${collapsedClass}"></div>
 
         <!-- 메인 영역 (컨텐츠와 정렬) -->
         <div class="top-bar-main">
             <div class="top-bar-left">
                 <button class="top-bar-toggle" onclick="toggleSidebar()" title="사이드바 토글">
-                    <i data-lucide="panel-left-close" class="w-5 h-5" id="sidebar-toggle-icon"></i>
+                    <i data-lucide="${toggleIcon}" class="w-5 h-5" id="sidebar-toggle-icon"></i>
                 </button>
                 <div class="top-bar-divider"></div>
                 <span class="top-bar-title">${pageTitle}</span>

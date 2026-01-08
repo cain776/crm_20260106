@@ -1,5 +1,5 @@
 /* ========================================
-   QPEED - Home Page JavaScript
+   EyeChartPro - Home Page JavaScript
    ======================================== */
 
 // Initialize home page when DOM is loaded

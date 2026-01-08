@@ -1,5 +1,5 @@
 /* ========================================
-   QPEED - Main JavaScript
+   EyeChartPro - Main JavaScript
    ======================================== */
 
 // Tailwind CSS Configuration
@@ -128,10 +128,19 @@ function toggleSubmenu(id) {
 
     if (!submenu) return;
 
-    submenu.classList.toggle('open');
+    // open과 show 클래스를 동시에 토글하여 CSS와 일관성 유지
+    const isCurrentlyOpen = submenu.classList.contains('open');
+
+    if (isCurrentlyOpen) {
+        submenu.classList.remove('open');
+        submenu.classList.remove('show');
+    } else {
+        submenu.classList.add('open');
+        submenu.classList.add('show');
+    }
 
     if (arrow) {
-        arrow.style.transform = submenu.classList.contains('open') ? 'rotate(180deg)' : '';
+        arrow.style.transform = !isCurrentlyOpen ? 'rotate(180deg)' : '';
     }
 
     // Save submenu state to localStorage
